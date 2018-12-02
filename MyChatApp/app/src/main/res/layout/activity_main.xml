@@ -8,7 +8,7 @@
     tools:context=".Activity.MainActivity">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolBar"
+        android:id="@+id/toolBarMain"
         app:title="My App Chat"
         android:background="@drawable/custom_background"
         app:titleTextColor="#ffff"
@@ -20,14 +20,6 @@
         android:id="@+id/txtEmail"
         android:text="Email@gmail.com"
         android:textSize="30sp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:id="@+id/btnDangXuat"
-        android:text="Đăng xuất"
-        android:textColor="#000000"
-        android:textSize="20sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

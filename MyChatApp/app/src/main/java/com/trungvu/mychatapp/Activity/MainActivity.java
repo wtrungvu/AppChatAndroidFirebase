@@ -3,6 +3,9 @@ package com.trungvu.mychatapp.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,8 +17,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.trungvu.mychatapp.R;
 
 public class MainActivity extends AppCompatActivity {
+    private Toolbar toolBarMain;
     private TextView txtEmail;
-    private Button btnDangXuat;
 
     private  FirebaseAuth mAuth;
     private  FirebaseUser user;
@@ -34,19 +37,34 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addControls() {
+        toolBarMain = findViewById(R.id.toolBarMain);
         txtEmail = findViewById(R.id.txtEmail);
-        btnDangXuat = findViewById(R.id.btnDangXuat);
     }
 
     private void addEvents() {
         txtEmail.setText(user.getEmail());
+        actionToolBar();
+    }
 
-        btnDangXuat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DangXuat();
-            }
-        });
+    private void actionToolBar() {
+        setSupportActionBar(toolBarMain);
+        getSupportActionBar().setTitle("My App Chat");
+    }
+
+    // Tạo custom menu trên thanh ToolBar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    // Bắt sự kiện nếu ấn một item trên thanh ToolBar
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.main_logout_item){
+            DangXuat();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void DangXuat(){

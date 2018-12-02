@@ -6,10 +6,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.trungvu.mychatapp.R;
 
 public class StartActivity extends AppCompatActivity {
-    Button btnDangNhap, btnDangKy;
+    private Button btnDangNhap, btnDangKy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,4 +43,6 @@ public class StartActivity extends AppCompatActivity {
             }
         });
     }
+
+
 }
