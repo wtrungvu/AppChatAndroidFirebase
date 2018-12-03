@@ -19,7 +19,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.trungvu.mychatapp.R;
+
+import java.util.HashMap;
 
 public class RegisterActivity extends AppCompatActivity {
     private Toolbar toolBarDangKy;
@@ -31,6 +35,9 @@ public class RegisterActivity extends AppCompatActivity {
 
     // Progress Dialog
     private ProgressDialog progressDialog;
+
+    // Firebase Realtime Database
+    private DatabaseReference userDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +98,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    private void DangKy(String tenHienThiDangKy, String emailDangKy, String matKhauDangKy) {
+    private void DangKy(final String tenHienThiDangKy, String emailDangKy, String matKhauDangKy) {
         if (tenHienThiDangKy.equals("") && emailDangKy.equals("") && matKhauDangKy.equals("")) {
             progressDialog.hide();
             Toast.makeText(this, "Xin vui lòng không được bỏ trống thông tin nhập!", Toast.LENGTH_SHORT).show();
@@ -102,23 +109,43 @@ public class RegisterActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    progressDialog.dismiss();
-                                    Toast.makeText(getApplicationContext(), "Đăng ký thành công!", Toast.LENGTH_SHORT).show();
-                                    //FirebaseUser user = mAuth.getCurrentUser();
-                                    //updateUI(user);
+                                    // Kiểm tra và lấy mã uid tài khoản đăng nhập hiện tại
+                                    FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
+                                    String uid = current_user.getUid();
 
-                                    finish(); // Đóng màn hình Đăng ký hiện tại, nhảy sang màn hình Main
-                                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                    // Thiết lập lấy dữ liệu theo cấu trúc cây đã tạo trong Firebase Realtime
+                                    userDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
+
+                                    // Đưa dữ liệu vào kiểu HashMap
+                                    HashMap<String, String> userMap = new HashMap<>();
+                                    userMap.put("name", tenHienThiDangKy);
+                                    userMap.put("status", "Rất vui được làm quen với bạn!");
+                                    userMap.put("image", "default");
+                                    userMap.put("thumb_image", "default");
+
+                                    // Gửi dữ liệu HashMap vừa rồi lên database firebase của user
+                                    userDatabase.setValue(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()){
+                                                progressDialog.dismiss();
+                                                Toast.makeText(RegisterActivity.this, "Đăng ký thành công!", Toast.LENGTH_SHORT).show();
+                                                finish(); // Đóng màn hình Đăng ký hiện tại, nhảy sang màn hình Main
+                                                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Xóa android stack, Tránh tình trạng đăng ký xong ấn back lại
+                                                startActivity(intent);
+                                            }
+                                        }
+                                    });
                                 } else {
                                     progressDialog.hide();
-                                    Toast.makeText(getApplicationContext(), "Email đã có người đăng ký, xin vui lòng đăng ký email khác!", Toast.LENGTH_SHORT).show();
-                                    //updateUI(null);
+                                    Toast.makeText(RegisterActivity.this, "Email đã có người đăng ký, xin vui lòng đăng ký email khác!", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
             } catch (Exception e) {
                 progressDialog.hide();
-                Toast.makeText(getApplicationContext(), "Xin vui lòng nhập đầy đủ thông tin Email và Mật khẩu!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this, "Xin vui lòng nhập đầy đủ thông tin Email và Mật khẩu!", Toast.LENGTH_SHORT).show();
             }
         }
     }

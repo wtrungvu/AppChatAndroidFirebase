@@ -39,10 +39,10 @@ public class WelcomeActivity extends AppCompatActivity {
             public void run() {
                 // Nếu đăng nhập trước đó rồi chuyển thẳng sang màn hình chính ứng dụng luôn (Main Activity)
                 if (currentUser != null) {
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
                     finish(); // Đóng màn hình chào Splash Screen (Welcome Activity)
                 } else { // Ngước lại , trước đó chưa đăng nhập thì chuyển sang màn hình tùy chọn đăng nhập & đăng ký (Start Activity)
-                    startActivity(new Intent(getApplicationContext(), StartActivity.class));
+                    startActivity(new Intent(WelcomeActivity.this, StartActivity.class));
                     finish(); // Đóng màn hình chào Splash Screen (Welcome Activity)
                 }
             }

@@ -7,20 +7,26 @@
     android:orientation="vertical"
     tools:context=".Activity.MainActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolBarMain"
-        app:title="My App Chat"
-        android:background="@drawable/custom_background"
-        app:titleTextColor="#ffff"
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize">
-    </android.support.v7.widget.Toolbar>
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/txtEmail"
-        android:text="Email@gmail.com"
-        android:textSize="30sp"
+        <include
+            android:id="@+id/main_page_toolbar"
+            layout="@layout/app_bar_layout"></include>
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabLayoutMain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_background">
+        </android.support.design.widget.TabLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPagerMain"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
+    </android.support.v4.view.ViewPager>
 
 </LinearLayout>

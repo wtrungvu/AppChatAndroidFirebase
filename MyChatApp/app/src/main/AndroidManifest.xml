@@ -19,7 +19,10 @@
         </activity>
         <activity android:name=".Activity.RegisterActivity" />
         <activity android:name=".Activity.LoginActivity" />
-        <activity android:name=".Activity.MainActivity"></activity>
+        <activity android:name=".Activity.MainActivity" />
+        <activity android:name=".Activity.SettingsActivity" />
+        <activity android:name=".Activity.StatusActivity"
+            android:parentActivityName=".Activity.SettingsActivity"></activity>
     </application>
 
 </manifest>

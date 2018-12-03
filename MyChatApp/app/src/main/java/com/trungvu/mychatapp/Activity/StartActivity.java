@@ -31,15 +31,14 @@ public class StartActivity extends AppCompatActivity {
         btnDangNhap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(StartActivity.this, LoginActivity.class));
             }
         });
 
         btnDangKy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
+                startActivity(new Intent(StartActivity.this, RegisterActivity.class));
             }
         });
     }

@@ -1,6 +1,8 @@
 package com.trungvu.mychatapp.Activity;
 
 import android.content.Intent;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -14,11 +16,16 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.trungvu.mychatapp.Adapter.SectionsPagerAdapter;
 import com.trungvu.mychatapp.R;
 
 public class MainActivity extends AppCompatActivity {
     private Toolbar toolBarMain;
-    private TextView txtEmail;
+
+    private ViewPager viewPagerMain;
+    private SectionsPagerAdapter sectionsPagerAdapter;
+
+    private TabLayout tabLayoutMain;
 
     private  FirebaseAuth mAuth;
     private  FirebaseUser user;
@@ -38,11 +45,17 @@ public class MainActivity extends AppCompatActivity {
 
     private void addControls() {
         toolBarMain = findViewById(R.id.toolBarMain);
-        txtEmail = findViewById(R.id.txtEmail);
+
+        // Tabs
+        viewPagerMain = findViewById(R.id.viewPagerMain);
+        sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        viewPagerMain.setAdapter(sectionsPagerAdapter);
+
+        tabLayoutMain = findViewById(R.id.tabLayoutMain);
+        tabLayoutMain.setupWithViewPager(viewPagerMain);
     }
 
     private void addEvents() {
-        txtEmail.setText(user.getEmail());
         actionToolBar();
     }
 
@@ -58,11 +71,15 @@ public class MainActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    // Bắt sự kiện nếu ấn một item trên thanh ToolBar
+    // Bắt sự kiện nếu ấn một item trên thanh ToolBar Menu
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.main_logout_item){
+        if (item.getItemId() == R.id.main_logout_item){ // Menu -> Đăng Xuất
             DangXuat();
+        }
+        if(item.getItemId() == R.id.main_setting_item){ // Menu -> Thiết Lập Tài Khoản
+            Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
+            startActivity(settingsIntent);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -70,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
     public void DangXuat(){
         mAuth.signOut();
         finish(); // đóng màn hình Main
-        startActivity(new Intent(getApplicationContext(), StartActivity.class));
+        startActivity(new Intent(MainActivity.this, StartActivity.class));
         Toast.makeText(this, "Đăng xuất thành công!", Toast.LENGTH_SHORT).show();
     }
 

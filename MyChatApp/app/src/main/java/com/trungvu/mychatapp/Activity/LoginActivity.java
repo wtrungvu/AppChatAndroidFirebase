@@ -97,12 +97,14 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             progressDialog.dismiss();
-                            Toast.makeText(getApplicationContext(), "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
                             finish(); // Đóng màn hình Login hiện tại, nhảy sang màn hình Main
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Xóa android stack, Tránh tình trạng đăng nhập xong ấn back lại
+                            startActivity(intent);
                         } else {
                             progressDialog.hide();
-                            Toast.makeText(getApplicationContext(), "Sai email hoặc mật khẩu xin vui lòng thử lại!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Sai email hoặc mật khẩu xin vui lòng thử lại!", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
