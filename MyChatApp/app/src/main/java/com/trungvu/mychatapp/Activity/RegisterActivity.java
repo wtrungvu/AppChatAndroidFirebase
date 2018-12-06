@@ -18,6 +18,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -103,6 +106,7 @@ public class RegisterActivity extends AppCompatActivity {
             progressDialog.hide();
             Toast.makeText(this, "Xin vui lòng không được bỏ trống thông tin nhập!", Toast.LENGTH_SHORT).show();
         } else {
+            String error = "";
             try {
                 mAuth.createUserWithEmailAndPassword(emailDangKy, matKhauDangKy)
                         .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -139,13 +143,13 @@ public class RegisterActivity extends AppCompatActivity {
                                     });
                                 } else {
                                     progressDialog.hide();
-                                    Toast.makeText(RegisterActivity.this, "Email đã có người đăng ký, xin vui lòng đăng ký email khác!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(RegisterActivity.this, "Xin vui lòng nhập đúng địa chỉ email và mật khẩu phải lớn hơn 6 kí tự!", Toast.LENGTH_LONG).show();
                                 }
                             }
                         });
             } catch (Exception e) {
                 progressDialog.hide();
-                Toast.makeText(RegisterActivity.this, "Xin vui lòng nhập đầy đủ thông tin Email và Mật khẩu!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this, "Xin vui lòng nhập đầy đủ thông tin Email và Mật khẩu!", Toast.LENGTH_LONG).show();
             }
         }
     }

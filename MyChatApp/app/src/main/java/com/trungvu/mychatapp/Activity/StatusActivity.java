@@ -58,6 +58,8 @@ public class StatusActivity extends AppCompatActivity {
         // Dữ liệu trạng thái status cũ truyền Intent qua
         String status_value = getIntent().getStringExtra("status_value");
         txtTrangThaiThayDoi.setText(status_value);
+
+        txtTrangThaiThayDoi.setSelection(txtTrangThaiThayDoi.getText().length()); // Place cursor at the end of text in EditText
     }
 
     private void addEvents() {
