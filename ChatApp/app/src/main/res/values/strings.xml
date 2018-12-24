@@ -1,0 +1,112 @@
+<resources>
+    <string name="app_name">Chat App</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="welcome_text">Welcome to Chat App</string>
+    <string name="already_have_account_button">already have an account?</string>
+    <string name="need_account_button">need new account</string>
+
+    <string name="name_activity_login">Sign in</string>
+    <string name="login_text">Sign in your account</string>
+    <string name="login_button">Sign In</string>
+    <string name="edt_login_password">Password...</string>
+    <string name="edt_login_email">Email...</string>
+
+    <string name="name_activity_register">Sign up</string>
+    <string name="register_text">Register in your account</string>
+    <string name="edt_name_register">Name...</string>
+    <string name="edt_email_register">Email...</string>
+    <string name="edt_password_register">Password...</string>
+    <string name="create_account_button">create account</string>
+
+    <string name="main_requests">Requests</string>
+    <string name="main_chats">Chats</string>
+    <string name="main_friends">Friends</string>
+
+    <string name="main_account_settings_button">Account settings</string>
+    <string name="main_all_users_button">Find friends</string>
+    <string name="main_logout_button">Log out</string>
+
+    <string name="profile_visit_send_req_btn">Send friend request</string>
+    <string name="profile_visit_decline_req_btn">Decline friend request</string>
+
+    <string name="cancel_friend_request">CANCEL FRIEND REQUEST</string>
+    <string name="accept_friend_request">Accept friend request</string>
+    <string name="unfriend_this_person">UnFriend this person</string>
+
+    <string name="settings_change_profile_button">Change image</string>
+    <string name="settings_change_status_button">Change status</string>
+
+    <string name="edt_status">Change status here ....</string>
+    <string name="btn_save_changes">Save Changes</string>
+
+    <string name="change_status_activity">Change status</string>
+
+    <string name="please_write_status_activity">Please write status</string>
+    <string name="loading_bar_changes_profile_status">Changes profile status</string>
+    <string name="loading_bar_please_wait">Please wait.....</string>
+    <string name="loading_bar_profile_status_updated_successfully">Profile status updated successfully!</string>
+    <string name="error_status_activity">Update Error...!</string>
+
+    <string name="updating_profile_image_setting_activity">"Updating profile image</string>
+    <string name="please_wait_image_setting_activity">Please wait....</string>
+    <string name="saving_your_profile_image_setting_activity">Saving your profile image</string>
+    <string name="profile_image_updated_successfully_image_setting_activity">Profile image updated successfully</string>
+    <string name="image_saving_error_image_setting_activity">Image Saving Error!</string>
+
+    <string name="please_write_your_email_login_activity">Please write your email</string>
+    <string name="please_write_your_password_login_activity">Please write your email</string>
+    <string name="log_in_account_login_activity">Log in account</string>
+    <string name="please_check_your_email_or_password_login_activity">Please check your email or password</string>
+
+    <string name="please_write_your_name_register_activity">Please write your name</string>
+    <string name="error_register_activity">Error Occured , Try again....</string>
+    <string name="creating_new_account_register_activity">Creating new account</string>
+
+    <string name="enter_the_username_to_search">Enter the name...</string>
+
+    <string name="all_users">All Users</string>
+
+    <string name="Enter_name_you_want_to_find">Enter the name you want to find</string>
+
+    <string name="login_successful">Login Successful!</string>
+    <string name="register_successful">Register Successful!</string>
+
+    <string name="logout_successful">Logout Successful!</string>
+
+    <string name="Accept">Accept</string>
+    <string name="Cancel">Cancel</string>
+
+    <string name="friend_request_accepted_successfully">Friend request accepted successfully!</string>
+    <string name="friends_request_cancelled_successfully">Friend request cancelled successfully!</string>
+
+    <string name="Request_sent">Request sent</string>
+
+    <string name="Friend_request_option">Friend request option</string>
+    <string name="Accept_Friend_Request">Accept Friend Request</string>
+    <string name="Cancel_Friend_Request">Cancel Friend Request</string>
+    <string name="Friend_request_sent">Friend request sent</string>
+
+    <string name="Online">Online</string>
+    <string name="active_few_ago_seconds_ago">active few ago seconds ago</string>
+    <string name="a_minute_ago">a minute ago</string>
+    <string name="minutes_ago"> minutes ago</string>
+    <string name="an_hour_ago">an hour ago</string>
+    <string name="hours_ago"> hours ago</string>
+    <string name="yesterday">yesterday</string>
+    <string name="day_ago"> days ago</string>
+
+    <string name="Sending_chat_image">Sending chat image </string>
+    <string name="Picture_sent_successfully">Picture sent successfully!</string>
+    <string name="Picture_not_sent">Picture not sent .Try again!</string>
+    <string name="Write_a_message">Write a message</string>
+    <string name="Please_write_your_message">Please write your message</string>
+
+    <string name="Select_option">Select option</string>
+    <string name="Send_Message">Send Message</string>
+
+    <string name="Friend_since">Friend since: </string>
+
+</resources>

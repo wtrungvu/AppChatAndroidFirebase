@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string name="welcome_text">Chào mừng đến với Chat App</string>
+<string name="already_have_account_button">Đã có tài khoản</string>
+<string name="need_account_button">Tạo tài khoản mới</string>
+
+<string name="name_activity_login">Đăng nhập tài khoản</string>
+<string name="login_text">Đăng nhập vào tài khoản của bạn</string>
+<string name="edt_login_password">Mật khẩu</string>
+<string name="edt_login_email">Email</string>
+<string name="login_button">Đăng nhập</string>
+
+<string name="name_activity_register">Đăng ký tài khoản</string>
+<string name="register_text">Đăng ký vào tài khoản của bạn</string>
+<string name="edt_name_register">Tên hiển thị</string>
+<string name="edt_email_register">Email</string>
+<string name="edt_password_register">Mật khẩu</string>
+<string name="create_account_button">Đăng ký</string>
+
+<string name="main_requests">Lời mời kết bạn</string>
+<string name="main_chats">Tin nhắn</string>
+<string name="main_friends">Bạn bè</string>
+
+<string name="main_account_settings_button">Thiết lập tài khoản</string>
+<string name="main_all_users_button">Tìm kiếm bạn bè</string>
+<string name="main_logout_button">Đăng xuất</string>
+
+<string name="profile_visit_send_req_btn">Gửi lời mời kết bạn</string>
+<string name="profile_visit_decline_req_btn">Từ chối lời mời kết bạn</string>
+
+<string name="cancel_friend_request">Hủy lời mời kết bạn</string>
+<string name="accept_friend_request">Chấp nhận lời mời kết bạn</string>
+<string name="unfriend_this_person">Hủy kết bạn</string>
+
+<string name="settings_change_profile_button">Cập nhật ảnh đại diện</string>
+<string name="settings_change_status_button">Cập nhật trạng thái</string>
+
+<string name="edt_status">Cập nhật trạng thái vào đây....</string>
+<string name="btn_save_changes">Lưu thay đổi</string>
+
+<string name="change_status_activity">Cập nhật trạng thái</string>
+
+<string name="please_write_status_activity">Vui lòng nhập trạng thái</string>
+<string name="loading_bar_changes_profile_status">Cập nhật hồ sơ trạng thái</string>
+<string name="loading_bar_please_wait">Vui lòng chờ một chút...</string>
+<string name="loading_bar_profile_status_updated_successfully">Cập nhật trạng thái thành công!</string>
+<string name="error_status_activity">Lỗi cập nhật...!</string>
+
+<string name="updating_profile_image_setting_activity">Đang cập nhật ảnh đại diện</string>
+<string name="please_wait_image_setting_activity">Vui lòng chờ một chút...</string>
+<string name="saving_your_profile_image_setting_activity">Đang cập nhật ảnh đại diện...</string>
+<string name="profile_image_updated_successfully_image_setting_activity">Cập nhật ảnh đại diện của bạn thành công!</string>
+<string name="image_saving_error_image_setting_activity">Lỗi lưu ảnh!</string>
+
+<string name="please_write_your_email_login_activity">Vui lòng nhập email đầy đủ!</string>
+<string name="please_write_your_password_login_activity">Vui lòng nhập mật khẩu đầy đủ!</string>
+<string name="log_in_account_login_activity">Đăng nhập tài khoản</string>
+<string name="please_check_your_email_or_password_login_activity">Vui lòng kiểm tra lại email và password</string>
+
+<string name="please_write_your_name_register_activity">Vui lòng nhập tên hiển thị của bạn</string>
+<string name="error_register_activity">Lỗi , vui lòng thử lại....</string>
+<string name="creating_new_account_register_activity">Tạo tài khoản mới</string>
+
+<string name="enter_the_username_to_search">Nhập tên người dùng...</string>
+
+<string name="all_users">Tìm kiếm bạn bè</string>
+
+<string name="Enter_name_you_want_to_find">Nhập tên bạn cần tìm....</string>
+
+<string name="login_successful">Đăng nhập thành công!</string>
+<string name="register_successful">Đăng ký thành công!</string>
+
+<string name="logout_successful">Đăng xuất thành công!</string>
+
+<string name="Accept">Chấp nhận</string>
+<string name="Cancel">Hủy bỏ</string>
+
+<string name="friend_request_accepted_successfully">Yêu cầu kết bạn được chấp nhận thành công!</string>
+<string name="friends_request_cancelled_successfully">Yêu cầu kết bạn đã hủy thành công!</string>
+
+<string name="Request_sent">Đã gửi yêu cầu</string>
+<string name="Friend_request_option">Tùy chọn yêu cầu kết bạn</string>
+<string name="Accept_Friend_Request">Chấp nhận yêu cầu kết bạn</string>
+<string name="Cancel_Friend_Request">Hủy yêu cầu kết bạn</string>
+<string name="Friend_request_sent">Yêu cầu kết bạn đã gửi</string>
+
+<string name="Online">Đang hoạt động</string>
+<string name="active_few_ago_seconds_ago">hoạt động vài giây trước</string>
+<string name="a_minute_ago">một phút trước</string>
+<string name="minutes_ago"> phút trước</string>
+<string name="an_hour_ago">một giờ trước</string>
+<string name="hours_ago"> giờ trước</string>
+<string name="yesterday">ngày hôm qua</string>
+<string name="day_ago"> ngày trước</string>
+
+<string name="Sending_chat_image">Đang gửi ảnh </string>
+<string name="Picture_sent_successfully">Ảnh gửi thành công!</string>
+<string name="Picture_not_sent">Ảnh chưa được gửi, xin vui lòng thử lại!</string>
+<string name="Write_a_message">Nhập tin nhắn</string>
+<string name="Please_write_your_message">Vui lòng nhập tin nhắn!</string>
+
+<string name="Select_option">Tùy chọn</string>
+<string name="Send_Message">Gửi tin nhắn</string>
+
+<string name="Friend_since">Bạn bè từ: </string>
+
+</resources>
