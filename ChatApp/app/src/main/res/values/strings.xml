@@ -53,11 +53,12 @@
     <string name="updating_profile_image_setting_activity">"Updating profile image</string>
     <string name="please_wait_image_setting_activity">Please wait....</string>
     <string name="saving_your_profile_image_setting_activity">Saving your profile image</string>
-    <string name="profile_image_updated_successfully_image_setting_activity">Profile image updated successfully</string>
-    <string name="image_saving_error_image_setting_activity">Image Saving Error!</string>
+    <string name="Success_Uploading">Success Uploading!</string>
+    <string name="Error_in_uploading">Error in uploading!</string>
+    <string name="Error_in_uploading_thumbnail">Error in uploading thumbnail!</string>
 
     <string name="please_write_your_email_login_activity">Please write your email</string>
-    <string name="please_write_your_password_login_activity">Please write your email</string>
+    <string name="please_write_your_password_login_activity">Please write your password</string>
     <string name="log_in_account_login_activity">Log in account</string>
     <string name="please_check_your_email_or_password_login_activity">Please check your email or password</string>
 
@@ -108,5 +109,11 @@
     <string name="Send_Message">Send Message</string>
 
     <string name="Friend_since">Friend since: </string>
+    
+    <string name="Please_enter_full_information">Please enter full information!</string>
+
+    <string name="Invalid_Email">Invalid Email!</string>
+    <string name="Weak_Password">Weak Password!</string>
+    <string name="Existing_Account">Existing account!</string>
 
 </resources>

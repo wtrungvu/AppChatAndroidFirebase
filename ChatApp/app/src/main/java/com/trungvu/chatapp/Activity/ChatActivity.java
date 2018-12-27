@@ -69,12 +69,15 @@ public class ChatActivity extends AppCompatActivity {
     StorageReference MessageImageStorageRef;
     ProgressDialog loadingBar;
 
+    ValueEventListener seenListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
         rootRef = FirebaseDatabase.getInstance().getReference();
+
         mAuth = FirebaseAuth.getInstance();
         messageSenderId = mAuth.getCurrentUser().getUid();
 
@@ -180,15 +183,17 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == Gallery_Pick && resultCode == RESULT_OK && data != null) {
+
             loadingBar.setTitle(getString(R.string.Sending_chat_image));
             loadingBar.setMessage(getString(R.string.loading_bar_please_wait));
             loadingBar.show();
+
             Uri ImageUri = data.getData();
             final String message_sender_ref = "Messages/" + messageSenderId + "/" + messageReceiverId;
             final String message_receiver_ref = "Messages/" + messageReceiverId + "/" + messageSenderId;
             DatabaseReference user_message_key = rootRef.child("Messages").child(messageSenderId).child(messageReceiverId).push();
-
             final String message_push_id = user_message_key.getKey();
 
             StorageReference filePath = MessageImageStorageRef.child(message_push_id + ".jpg");
@@ -218,9 +223,9 @@ public class ChatActivity extends AppCompatActivity {
                                 loadingBar.dismiss();
                             }
                         });
-
                         Toast.makeText(ChatActivity.this, getString(R.string.Picture_sent_successfully), Toast.LENGTH_SHORT).show();
                         loadingBar.dismiss();
+
                     } else {
                         Toast.makeText(ChatActivity.this, getString(R.string.Picture_not_sent), Toast.LENGTH_SHORT).show();
                         loadingBar.dismiss();
@@ -295,5 +300,33 @@ public class ChatActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    private void SeenMessage(){
+        rootRef.child("Messages").child(messageSenderId).child(messageReceiverId);
+        seenListener = rootRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    Messages messages = snapshot.getValue(Messages.class);
+                    if (messages.getFrom().equals(messageSenderId)){
+                        HashMap<String, Object> hashMap = new HashMap<>();
+                        hashMap.put("seen", true);
+                        snapshot.getRef().updateChildren(hashMap);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //rootRef.removeEventListener(seenListener);
     }
 }

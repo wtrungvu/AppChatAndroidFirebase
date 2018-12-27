@@ -26,10 +26,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageViewHolder> {
     private List<Messages> userMessagesList;
-
     DatabaseReference UsersDatabaseReference;
-
     private FirebaseAuth mAuth;
+
+    private static final int MSG_TYPE_LEFT = 0;
+    private static final int MSG_TYPE_RIGHT = 1;
 
     public MessageAdapter(List<Messages> userMessagesList){
         this.userMessagesList = userMessagesList;
@@ -37,10 +38,15 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
     @Override
     public MessageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View V = LayoutInflater.from(parent.getContext()).inflate(R.layout.messages_layout_of_user,parent,false);
-
-        mAuth = FirebaseAuth.getInstance();
-        return new MessageViewHolder(V);
+        if (viewType == MSG_TYPE_LEFT){
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_item_left,parent,false);
+            mAuth = FirebaseAuth.getInstance();
+            return new MessageViewHolder(view);
+        } else {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_item_right,parent,false);
+            mAuth = FirebaseAuth.getInstance();
+            return new MessageViewHolder(view);
+        }
     }
 
     @Override
@@ -48,10 +54,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
         String message_sender_id = mAuth.getCurrentUser().getUid();
         Messages messages = userMessagesList.get(position);
-
-        String fromUserId =messages.getFrom();
-
+        String fromUserId = messages.getFrom();
         String fromMessageType = messages.getType();
+
         UsersDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(fromUserId);
         UsersDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -68,22 +73,23 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
             }
         });
+
         if (fromMessageType.equals("text")){
-            holder.messagePicture.setVisibility(View.GONE);
+            holder.messagePicture.setVisibility(View.GONE); // Ẩn hẳn control
             if (fromUserId.equals(message_sender_id)){
                 holder.messageText.setBackgroundResource(R.drawable.message_text_background_two);
                 holder.messageText.setTextColor(Color.WHITE);
-                holder.messageText.setGravity(Gravity.LEFT);
+                //holder.messageText.setGravity(Gravity.LEFT);
             }
             else{
                 holder.messageText.setBackgroundResource(R.drawable.message_text_background);
                 holder.messageText.setTextColor(Color.WHITE);
-                holder.messageText.setGravity(Gravity.RIGHT);
+                //holder.messageText.setGravity(Gravity.RIGHT);
             }
             holder.messageText.setText(messages.getMessage());
         }
         else{
-            holder.messageText.setVisibility(View.INVISIBLE);
+            holder.messageText.setVisibility(View.GONE);
             holder.messageText.setPadding(0,0,0,0);
 
             Picasso.with(holder.userProfileImage.getContext()).load(messages.getMessage())
@@ -95,6 +101,18 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     @Override
     public int getItemCount() {
         return userMessagesList.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        String message_sender_id = mAuth.getInstance().getCurrentUser().getUid();
+
+        if (userMessagesList.get(position).getFrom().equals(message_sender_id)){
+            return MSG_TYPE_LEFT;
+        } else {
+            return MSG_TYPE_RIGHT;
+        }
+
     }
 
     public class MessageViewHolder extends RecyclerView.ViewHolder {

@@ -49,8 +49,9 @@
 <string name="updating_profile_image_setting_activity">Đang cập nhật ảnh đại diện</string>
 <string name="please_wait_image_setting_activity">Vui lòng chờ một chút...</string>
 <string name="saving_your_profile_image_setting_activity">Đang cập nhật ảnh đại diện...</string>
-<string name="profile_image_updated_successfully_image_setting_activity">Cập nhật ảnh đại diện của bạn thành công!</string>
-<string name="image_saving_error_image_setting_activity">Lỗi lưu ảnh!</string>
+<string name="Success_Uploading">Tải ảnh lên thành công!</string>
+<string name="Error_in_uploading">Lỗi khi tải ảnh lên!</string>
+<string name="Error_in_uploading_thumbnail">Lỗi khi tải ảnh thumbnail lên!</string>
 
 <string name="please_write_your_email_login_activity">Vui lòng nhập email đầy đủ!</string>
 <string name="please_write_your_password_login_activity">Vui lòng nhập mật khẩu đầy đủ!</string>
@@ -103,5 +104,11 @@
 <string name="Send_Message">Gửi tin nhắn</string>
 
 <string name="Friend_since">Bạn bè từ: </string>
+
+<string name="Please_enter_full_information">Vui lòng nhập đầy đủ thông tin!</string>
+
+<string name="Invalid_Email">Email không đúng định dạng! Bạn vui lòng nhập đúng định dạng email</string>
+    <string name="Weak_Password">Mật khẩu Yếu! Vui lòng đặt mật khẩu lớn hơn 6 kí tự!</string>
+    <string name="Existing_Account">Email có người đăng ký! Vui lòng chọn email khác để đăng ký</string>
 
 </resources>

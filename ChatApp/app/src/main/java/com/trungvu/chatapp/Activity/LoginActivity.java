@@ -27,7 +27,7 @@ import com.trungvu.chatapp.R;
 public class LoginActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     private Toolbar mToolbar;
-    EditText edt_login_email,edt_login_password;
+    EditText edt_login_email, edt_login_password;
     Button login_button;
     ProgressDialog loadingBar;
     DatabaseReference usersreference;
@@ -63,49 +63,49 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String email = edt_login_email.getText().toString();
                 String password = edt_login_password.getText().toString();
-                LoginUserAccount(email,password);
+                LoginUserAccount(email, password);
             }
         });
     }
 
     private void LoginUserAccount(String email, String password) {
-        if (TextUtils.isEmpty(email)){
-            Toast.makeText(this, getString(R.string.please_write_your_email_login_activity), Toast.LENGTH_SHORT).show();
-        }
-        if (TextUtils.isEmpty(password)){
-            Toast.makeText(this, getString(R.string.please_write_your_password_login_activity), Toast.LENGTH_SHORT).show();
-        }
-        else {
-            loadingBar.setTitle(getString(R.string.log_in_account_login_activity));
-            loadingBar.setMessage(getString(R.string.loading_bar_please_wait));
-            loadingBar.show();
-            mAuth.signInWithEmailAndPassword(email,password)
-                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()){
-                                String online_user_id = mAuth.getCurrentUser().getUid();
-                                String DeviceToken = FirebaseInstanceId.getInstance().getToken();
-                                usersreference.child(online_user_id).child("device_token").setValue(DeviceToken)
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                Toast.makeText(LoginActivity.this, getString(R.string.login_successful), Toast.LENGTH_SHORT).show();
-                                                Intent mainIntent = new Intent(LoginActivity.this,MainActivity.class);
-                                                mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                                startActivity(mainIntent);
-                                                finish();
-                                            }
-                                        });
-
-
+        if (TextUtils.isEmpty(email) && TextUtils.isEmpty(password)) {
+            Toast.makeText(this, getString(R.string.Please_enter_full_information), Toast.LENGTH_SHORT).show();
+        } else {
+            if (TextUtils.isEmpty(email)) {
+                Toast.makeText(this, getString(R.string.please_write_your_email_login_activity), Toast.LENGTH_SHORT).show();
+            }
+            if (TextUtils.isEmpty(password)) {
+                Toast.makeText(this, getString(R.string.please_write_your_password_login_activity), Toast.LENGTH_SHORT).show();
+            } else {
+                loadingBar.setTitle(getString(R.string.log_in_account_login_activity));
+                loadingBar.setMessage(getString(R.string.loading_bar_please_wait));
+                loadingBar.show();
+                mAuth.signInWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    String online_user_id = mAuth.getCurrentUser().getUid();
+                                    String DeviceToken = FirebaseInstanceId.getInstance().getToken();
+                                    usersreference.child(online_user_id).child("device_token").setValue(DeviceToken)
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Toast.makeText(LoginActivity.this, getString(R.string.login_successful), Toast.LENGTH_SHORT).show();
+                                                    Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
+                                                    mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                    startActivity(mainIntent);
+                                                    finish();
+                                                }
+                                            });
+                                } else {
+                                    Toast.makeText(LoginActivity.this, getString(R.string.please_check_your_email_or_password_login_activity), Toast.LENGTH_SHORT).show();
+                                }
+                                loadingBar.dismiss();
                             }
-                            else{
-                                Toast.makeText(LoginActivity.this, getString(R.string.please_check_your_email_or_password_login_activity), Toast.LENGTH_SHORT).show();
-                            }
-                            loadingBar.dismiss();
-                        }
-                    });
+                        });
+            }
         }
     }
 }

@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         addControls();
-        addEvents();
     }
 
     private void addControls() {
@@ -58,17 +57,15 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Chat App");
     }
 
-    private void addEvents() {
-
-    }
-
     @Override
     protected void onStart() {
         super.onStart();
         currentUser = mAuth.getCurrentUser();
-        if (currentUser==null){
+
+        if (currentUser == null) {
             LogOutUser();
-        }else if (currentUser!=null) {
+        }
+        else if (currentUser != null) {
             UsersReference.child("online").setValue("true");
         }
     }
@@ -76,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+
         if (currentUser!=null) {
             UsersReference.child("online").setValue(ServerValue.TIMESTAMP);
         }
