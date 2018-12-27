@@ -49,10 +49,11 @@ public class ChatsFragment extends Fragment {
         // Inflate the layout for this fragment
         myMainView = inflater.inflate(R.layout.fragment_chats, container, false);
         myChatsList = myMainView.findViewById(R.id.chats_list);
+
         mAuth = FirebaseAuth.getInstance();
         online_user_id = mAuth.getCurrentUser().getUid();
-        FriendsReference = FirebaseDatabase.getInstance().getReference().child("Friends").child(online_user_id);
 
+        FriendsReference = FirebaseDatabase.getInstance().getReference().child("Friends").child(online_user_id);
         UserReference = FirebaseDatabase.getInstance().getReference().child("Users");
 
         myChatsList.setHasFixedSize(true);
@@ -74,19 +75,16 @@ public class ChatsFragment extends Fragment {
         ) {
             @Override
             protected void populateViewHolder(final ChatsViewHolder viewHolder, Chats model, int position) {
-
                 final String list_user_id = getRef(position).getKey();
                 UserReference.child(list_user_id).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(final DataSnapshot dataSnapshot) {
                         final String userName = dataSnapshot.child("user_name").getValue().toString();
                         String thumbImage = dataSnapshot.child("user_thumb_image").getValue().toString();
-
                         String userStatus = dataSnapshot.child("user_status").getValue().toString();
 
                         if (dataSnapshot.hasChild("online")){
                             String online_status = (String) dataSnapshot.child("online").getValue().toString();
-
                             viewHolder.setUserOnline(online_status);
                         }
                         viewHolder.setUserName(userName);
