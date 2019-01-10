@@ -11,39 +11,33 @@ import com.jaeger.library.StatusBarUtil;
 import com.trungvu.chatapp.R;
 
 public class WelcomeActivity extends AppCompatActivity {
-    private static int SPLAH_TIME_OUT = 3000; // Màn hình chào 3 giây khi mở app lên
-    private FirebaseAuth mAuth;
+    private static int SPLAH_TIME_OUT = 3000;
+
+    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-        StatusBarUtil.setTransparent(this); // Set StatusBar Color Transparent
+        StatusBarUtil.setTransparent(this);
 
-        // Khởi tạo Firebase Auth
-        mAuth = FirebaseAuth.getInstance();
+        auth = FirebaseAuth.getInstance();
 
-        // Kiểm tra xem người dùng có đăng nhập trước đó hay không?
         checkUsers();
     }
 
     private void checkUsers() {
-        // Lấy User hiện tại
-        final FirebaseUser currentUser = mAuth.getCurrentUser();
-
-        // null = chưa từng đăng nhập ứng dụng trước đó
-        // not null = đã đăng nhập ứng dụng trước đó, chưa ấn nút đăng xuất
+        final FirebaseUser currentUser = auth.getCurrentUser();
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                // Nếu đăng nhập trước đó rồi chuyển thẳng sang màn hình chính ứng dụng luôn (Main Activity)
                 if (currentUser != null) {
                     startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
-                    finish(); // Đóng màn hình chào Splash Screen (Welcome Activity)
-                } else { // Ngước lại , trước đó chưa đăng nhập thì chuyển sang màn hình tùy chọn đăng nhập & đăng ký (Start Activity)
+                    finish();
+                } else {
                     startActivity(new Intent(WelcomeActivity.this, StartPageActivity.class));
-                    finish(); // Đóng màn hình chào Splash Screen (Welcome Activity)
+                    finish();
                 }
             }
         }, SPLAH_TIME_OUT);

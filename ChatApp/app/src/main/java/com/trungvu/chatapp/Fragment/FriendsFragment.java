@@ -28,56 +28,50 @@ import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class FriendsFragment extends Fragment {
+    View view;
+    RecyclerView recyclerView;
 
-    RecyclerView myFriendList;
-    DatabaseReference FriendsReference;
-    DatabaseReference UserReference;
-    FirebaseAuth mAuth;
+    FirebaseAuth auth;
+    DatabaseReference reference_Friends;
+    DatabaseReference reference_User;
     String online_user_id;
-    View myMainView;
-
-    public FriendsFragment() {
-        // Required empty public constructor
-    }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        myMainView = inflater.inflate(R.layout.fragment_friends, container, false);
-        myFriendList = myMainView.findViewById(R.id.friends_list);
-        mAuth = FirebaseAuth.getInstance();
-        online_user_id = mAuth.getCurrentUser().getUid();
+        view = inflater.inflate(R.layout.fragment_friends, container, false);
+        recyclerView = view.findViewById(R.id.recyclerView_FriendsFragment);
 
-        FriendsReference = FirebaseDatabase.getInstance().getReference().child("Friends").child(online_user_id);
-        FriendsReference.keepSynced(true);
-        UserReference = FirebaseDatabase.getInstance().getReference().child("Users");
-        UserReference.keepSynced(true);
+        auth = FirebaseAuth.getInstance();
+        online_user_id = auth.getCurrentUser().getUid();
 
-        myFriendList.setLayoutManager(new LinearLayoutManager(getContext()));
+        reference_Friends = FirebaseDatabase.getInstance().getReference().child("Friends").child(online_user_id);
+        reference_Friends.keepSynced(true);
+        reference_User = FirebaseDatabase.getInstance().getReference().child("Users");
+        reference_User.keepSynced(true);
 
-        return myMainView;
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        return view;
     }
 
     @Override
     public void onStart() {
         super.onStart();
+
         FirebaseRecyclerAdapter<Friends, FriendsViewHolder> adapter = new FirebaseRecyclerAdapter<Friends, FriendsViewHolder>(
                 Friends.class,
                 R.layout.all_users_display_layout,
                 FriendsViewHolder.class,
-                FriendsReference
+                reference_Friends
         ) {
             @Override
             protected void populateViewHolder(final FriendsViewHolder viewHolder, Friends model, int position) {
                 viewHolder.setDate(model.getDate(), getContext());
                 final String list_user_id = getRef(position).getKey();
-                UserReference.child(list_user_id).addValueEventListener(new ValueEventListener() {
+
+                reference_User.child(list_user_id).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(final DataSnapshot dataSnapshot) {
                         final String userName = dataSnapshot.child("user_name").getValue().toString();
@@ -88,13 +82,15 @@ public class FriendsFragment extends Fragment {
 
                             viewHolder.setUserOnline(online_status);
                         }
+
                         viewHolder.setUserName(userName);
                         viewHolder.setThumbImage(thumbImage, getContext());
-                        viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+
+                        viewHolder.view.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 CharSequence option[] = new CharSequence[]{
-                                        userName + "'s Profile",
+                                        getString(R.string.See_profile),
                                         getString(R.string.Send_Message)
                                 };
 
@@ -115,7 +111,7 @@ public class FriendsFragment extends Fragment {
                                                 chatIntent.putExtra("user_name", userName);
                                                 startActivity(chatIntent);
                                             } else {
-                                                UserReference.child(list_user_id).child("online").setValue(ServerValue.TIMESTAMP)
+                                                reference_User.child(list_user_id).child("online").setValue(ServerValue.TIMESTAMP)
                                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                             @Override
                                                             public void onSuccess(Void aVoid) {
@@ -141,6 +137,6 @@ public class FriendsFragment extends Fragment {
                 });
             }
         };
-        myFriendList.setAdapter(adapter);
+        recyclerView.setAdapter(adapter);
     }
 }

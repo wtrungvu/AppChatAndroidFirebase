@@ -2,7 +2,9 @@ package com.trungvu.chatapp.Model;
 
 
 public class Requests {
-    private String user_name,user_status,user_thumb_image;
+    private String user_name;
+    private String user_status;
+    private String user_thumb_image;
 
     public Requests() {
     }

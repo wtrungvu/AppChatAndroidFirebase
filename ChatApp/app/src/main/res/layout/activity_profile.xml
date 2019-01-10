@@ -7,17 +7,21 @@
     android:background="@drawable/custom_background"
     tools:context="com.trungvu.chatapp.Activity.ProfileActivity">
 
+    <include
+        android:id="@+id/toolbar_ProfileActivity"
+        layout="@layout/app_bar_layout"></include>
+
     <ImageView
-        android:id="@+id/profile_visit_user_image"
+        android:id="@+id/imageView_Visit_User_ProfileActivity"
         android:layout_width="match_parent"
         android:layout_height="280dp"
         android:src="@drawable/profile" />
 
     <TextView
-        android:id="@+id/profile_visit_user_name"
+        android:id="@+id/username_Visit_User_ProfileActivity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/profile_visit_user_image"
+        android:layout_below="@+id/imageView_Visit_User_ProfileActivity"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:gravity="center"
@@ -27,10 +31,10 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/profile_visit_user_status"
+        android:id="@+id/status_Visit_User_ProfileActivity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/profile_visit_user_name"
+        android:layout_below="@+id/username_Visit_User_ProfileActivity"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
         android:gravity="center"
@@ -39,7 +43,20 @@
         android:textSize="18sp" />
 
     <Button
-        android:id="@+id/profile_visit_send_req_btn"
+        android:id="@+id/button_MoreInfo_ProfileActivity"
+        android:layout_width="230dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="130sp"
+        android:background="@drawable/custom_button_4"
+        android:text="@string/button_MoreInfo_ProfileActivity"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/button_SendFriendRequest_ProfileActivity"
         android:layout_width="230dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -52,7 +69,7 @@
         android:textStyle="bold" />
 
     <Button
-        android:id="@+id/profile_visit_decline_req_btn"
+        android:id="@+id/button_DeclineFriendRequest_ProfileActivity"
         android:layout_width="230dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

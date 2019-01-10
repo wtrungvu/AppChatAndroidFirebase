@@ -5,7 +5,7 @@
     tools:context="com.trungvu.chatapp.Fragment.RequestsFragment">
 
   <android.support.v7.widget.RecyclerView
-      android:id="@+id/requests_list"
+      android:id="@+id/recyclerView_RequestsFragment"
       android:layout_width="match_parent"
       android:layout_height="match_parent">
 

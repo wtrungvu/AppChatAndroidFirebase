@@ -14,19 +14,25 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class RequestViewHolder extends RecyclerView.ViewHolder {
-    public View mView;
+    public View view;
+
     public RequestViewHolder(View itemView) {
         super(itemView);
-        mView = itemView;
+        view = itemView;
     }
 
     public void setUserName(String userName) {
-        TextView userNameDisplay = mView.findViewById(R.id.request_profile_name);
+        TextView userNameDisplay = view.findViewById(R.id.username_friend_request_all_users);
         userNameDisplay.setText(userName);
     }
 
+    public void setUserStatus(String userStatus) {
+        TextView status = view.findViewById(R.id.status_friend_request_all_users);
+        status.setText(userStatus);
+    }
+
     public void setThumbImage(final String thumbImage, final Context ctx) {
-        final CircleImageView thumb_image = mView.findViewById(R.id.request_profile_image);
+        final CircleImageView thumb_image = view.findViewById(R.id.profile_image_friend_request_all_users);
 
         Picasso.with(ctx).load(thumbImage).networkPolicy(NetworkPolicy.OFFLINE).placeholder(R.drawable.profile)
                 .into(thumb_image, new Callback() {
@@ -42,8 +48,4 @@ public class RequestViewHolder extends RecyclerView.ViewHolder {
                 });
     }
 
-    public void setUserStatus(String userStatus) {
-        TextView status = mView.findViewById(R.id.request_profile_status);
-        status.setText(userStatus);
-    }
 }

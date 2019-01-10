@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@drawable/custom_background"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@drawable/custom_background">
 
     <TextView
-        android:textStyle="bold"
-        android:textColor="@android:color/background_light"
-        android:textSize="18sp"
-        android:id="@+id/custom_profile_name"
+        android:id="@+id/display_user_name_chat_custom_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:text="Display user name" />
+        android:text="Display user name"
+        android:textColor="@android:color/background_light"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <TextView
-        android:textStyle="bold"
-        android:textColor="@android:color/background_light"
-        android:textSize="14sp"
-        android:id="@+id/custom_user_last_seen"
+        android:id="@+id/last_seen_chat_custom_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/custom_profile_name"
+        android:layout_below="@+id/display_user_name_chat_custom_bar"
         android:layout_marginTop="3dp"
-        android:text="Last seen" />
+        android:text="Last seen"
+        android:textColor="@android:color/background_light"
+        android:textSize="14sp"
+        android:textStyle="bold" />
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/custom_profile_image"
-        android:layout_marginRight="5dp"
+        android:id="@+id/profile_image_chat_custom_bar"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_alignBottom="@+id/custom_user_last_seen"
+        android:layout_alignBottom="@+id/last_seen_chat_custom_bar"
         android:layout_alignParentEnd="true"
+        android:layout_marginRight="5dp"
         android:src="@drawable/profile" />
 
 </RelativeLayout>

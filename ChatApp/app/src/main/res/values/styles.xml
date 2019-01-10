@@ -8,4 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <color name="startColor_custom_background">#ee0979</color>
+    <color name="endColor_custom_background">#ff6a00</color>
+
 </resources>

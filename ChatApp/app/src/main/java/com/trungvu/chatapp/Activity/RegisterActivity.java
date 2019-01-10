@@ -25,13 +25,23 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.jaeger.library.StatusBarUtil;
 import com.trungvu.chatapp.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 public class RegisterActivity extends AppCompatActivity {
-    private Toolbar mToolbar;
-    EditText RegisterUserName, RegisterUserEmail, RegisterUserPassword;
-    Button CreateAccountButton;
+    Toolbar toolbar;
+    EditText username;
+    EditText email;
+    EditText RegisterUserPassword;
+
+    Button btn_Create_Account;
     ProgressDialog loadingBar;
-    FirebaseAuth mAuth;
-    DatabaseReference database;
+
+    FirebaseAuth auth;
+    DatabaseReference reference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,42 +49,47 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         StatusBarUtil.setTransparent(this); // Set StatusBar Color Transparent
 
-        mAuth = FirebaseAuth.getInstance();
+        auth = FirebaseAuth.getInstance();
 
         addControls();
         addEvents();
     }
 
     private void addControls() {
-        mToolbar = findViewById(R.id.register_toolbar);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle(getString(R.string.name_activity_register));
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        createToolBar();
 
-        RegisterUserName = findViewById(R.id.edt_name_register);
-        RegisterUserEmail = findViewById(R.id.edt_email_register);
-        RegisterUserPassword = findViewById(R.id.edt_password_register);
-        CreateAccountButton = findViewById(R.id.create_account_button);
+        username = findViewById(R.id.editText_username_RegisterActivity);
+        email = findViewById(R.id.editText_email_RegisterActivity);
+        RegisterUserPassword = findViewById(R.id.editText_password_RegisterActivity);
+        btn_Create_Account = findViewById(R.id.button_create_account_RegisterActivity);
         loadingBar = new ProgressDialog(this);
     }
 
+    private void createToolBar() {
+        toolbar = findViewById(R.id.toolbar_RegisterActivity);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(getString(R.string.name_activity_register));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
     private void addEvents() {
-        CreateAccountButton.setOnClickListener(new View.OnClickListener() {
+        btn_Create_Account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String name = RegisterUserName.getText().toString();
-                String email = RegisterUserEmail.getText().toString();
-                String password = RegisterUserPassword.getText().toString();
-                RegisterAccount(name, email, password);
+                String txt_username = username.getText().toString();
+                String txt_email = email.getText().toString();
+                String txt_password = RegisterUserPassword.getText().toString();
+
+                RegisterAccount(txt_username, txt_email, txt_password);
             }
         });
     }
 
-    private void RegisterAccount(final String name, String email, String password) {
-        if (TextUtils.isEmpty(name) && TextUtils.isEmpty(email) && TextUtils.isEmpty(password)) {
+    private void RegisterAccount(final String username, final String email, String password) {
+        if (TextUtils.isEmpty(username) && TextUtils.isEmpty(email) && TextUtils.isEmpty(password)) {
             Toast.makeText(this, getString(R.string.Please_enter_full_information), Toast.LENGTH_SHORT).show();
         } else {
-            if (TextUtils.isEmpty(name)) {
+            if (TextUtils.isEmpty(username)) {
                 Toast.makeText(this, getString(R.string.please_write_your_name_register_activity), Toast.LENGTH_SHORT).show();
             }
             if (TextUtils.isEmpty(email)) {
@@ -82,13 +97,12 @@ public class RegisterActivity extends AppCompatActivity {
             }
             if (TextUtils.isEmpty(password)) {
                 Toast.makeText(this, getString(R.string.please_write_your_password_login_activity), Toast.LENGTH_SHORT).show();
-            }
-            else {
+            } else {
                 loadingBar.setTitle(getString(R.string.creating_new_account_register_activity));
                 loadingBar.setMessage(getString(R.string.please_wait_image_setting_activity));
                 loadingBar.show();
 
-                mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         String error = "";
@@ -106,15 +120,32 @@ public class RegisterActivity extends AppCompatActivity {
                         }
 
                         if (task.isSuccessful()) {
-                            String DeviceToken = FirebaseInstanceId.getInstance().getToken();
-                            String current_user_id = mAuth.getCurrentUser().getUid();
+                            String current_user_id = auth.getCurrentUser().getUid();
 
-                            database = FirebaseDatabase.getInstance().getReference().child("Users").child(current_user_id);
-                            database.child("user_name").setValue(name);
-                            database.child("user_status").setValue("Xin chào! Tôi đang sử dụng Chat App, kết bạn với tôi nhé!");
-                            database.child("user_image").setValue("default_profile");
-                            database.child("device_token").setValue(DeviceToken);
-                            database.child("user_thumb_image").setValue("default_image")
+                            Date d = new Date();
+                            SimpleDateFormat sdf_currentHour = new SimpleDateFormat("HH:mm");
+                            String join_time = sdf_currentHour.format(d);
+
+                            Calendar calendar = Calendar.getInstance();
+                            SimpleDateFormat sdf_currentDate = new SimpleDateFormat("dd/MM/yyyy");
+                            String join_date = sdf_currentDate.format(calendar.getTime());
+
+                            reference = FirebaseDatabase.getInstance().getReference().child("Users").child(current_user_id);
+
+                            Map hashMap = new HashMap();
+                            hashMap.put("user_name", username);
+                            hashMap.put("user_status", "Xin chào! Tôi đang sử dụng Chat App, kết bạn với tôi nhé!");
+                            hashMap.put("user_image", "default_profile");
+                            hashMap.put("user_thumb_image", "default_image");
+                            hashMap.put("user_email", email);
+                            hashMap.put("user_sex", "male");
+                            hashMap.put("user_phone_number", "default_phone_number");
+                            hashMap.put("user_birthday", "default_birthday");
+                            hashMap.put("user_name_lowercase", username.toLowerCase());
+                            hashMap.put("user_join_date", join_date);
+                            hashMap.put("user_join_time", join_time);
+
+                            reference.setValue(hashMap)
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {

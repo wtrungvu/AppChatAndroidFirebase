@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -25,12 +26,15 @@ import com.trungvu.chatapp.R;
 
 
 public class LoginActivity extends AppCompatActivity {
-    FirebaseAuth mAuth;
-    private Toolbar mToolbar;
+    Toolbar toolbar;
     EditText edt_login_email, edt_login_password;
-    Button login_button;
-    ProgressDialog loadingBar;
-    DatabaseReference usersreference;
+    Button btn_Login;
+    TextView txt_forgot_your_password;
+
+    ProgressDialog progressDialog;
+
+    FirebaseAuth auth;
+    DatabaseReference reference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,32 +42,45 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         StatusBarUtil.setTransparent(this); // Set StatusBar Color Transparent
 
-        mAuth = FirebaseAuth.getInstance();
-        usersreference = FirebaseDatabase.getInstance().getReference().child("Users");
+        auth = FirebaseAuth.getInstance();
+        reference = FirebaseDatabase.getInstance().getReference().child("Users");
 
         addControls();
         addEvents();
     }
 
     private void addControls() {
-        mToolbar = findViewById(R.id.login_toolbar);
-        setSupportActionBar(mToolbar);
+        createToolBar();
+
+        progressDialog = new ProgressDialog(this);
+        edt_login_email = findViewById(R.id.edt_login_email_LoginActivity);
+        edt_login_password = findViewById(R.id.edt_login_password_LoginActivity);
+        btn_Login = findViewById(R.id.login_button_LoginActivity);
+        txt_forgot_your_password = findViewById(R.id.textView_ForgotYourPassword_LoginActivity);
+    }
+
+    private void createToolBar() {
+        toolbar = findViewById(R.id.toolbar_LoginActivity);
+        setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(getString(R.string.name_activity_login));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        loadingBar = new ProgressDialog(this);
-        edt_login_email = findViewById(R.id.edt_login_email);
-        edt_login_password = findViewById(R.id.edt_login_password);
-        login_button = findViewById(R.id.login_button);
     }
 
     private void addEvents() {
-        login_button.setOnClickListener(new View.OnClickListener() {
+        btn_Login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String email = edt_login_email.getText().toString();
                 String password = edt_login_password.getText().toString();
                 LoginUserAccount(email, password);
+            }
+        });
+
+        txt_forgot_your_password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent_Forgot = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
+                startActivity(intent_Forgot);
             }
         });
     }
@@ -78,31 +95,26 @@ public class LoginActivity extends AppCompatActivity {
             if (TextUtils.isEmpty(password)) {
                 Toast.makeText(this, getString(R.string.please_write_your_password_login_activity), Toast.LENGTH_SHORT).show();
             } else {
-                loadingBar.setTitle(getString(R.string.log_in_account_login_activity));
-                loadingBar.setMessage(getString(R.string.loading_bar_please_wait));
-                loadingBar.show();
-                mAuth.signInWithEmailAndPassword(email, password)
+                progressDialog.setTitle(getString(R.string.log_in_account_login_activity));
+                progressDialog.setMessage(getString(R.string.loading_bar_please_wait));
+                progressDialog.show();
+
+                auth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    String online_user_id = mAuth.getCurrentUser().getUid();
-                                    String DeviceToken = FirebaseInstanceId.getInstance().getToken();
-                                    usersreference.child(online_user_id).child("device_token").setValue(DeviceToken)
-                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                @Override
-                                                public void onSuccess(Void aVoid) {
-                                                    Toast.makeText(LoginActivity.this, getString(R.string.login_successful), Toast.LENGTH_SHORT).show();
-                                                    Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
-                                                    mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                                    startActivity(mainIntent);
-                                                    finish();
-                                                }
-                                            });
+                                    String online_user_id = auth.getCurrentUser().getUid();
+
+                                    Toast.makeText(LoginActivity.this, getString(R.string.login_successful), Toast.LENGTH_SHORT).show();
+                                    Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
+                                    mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(mainIntent);
+                                    finish();
                                 } else {
                                     Toast.makeText(LoginActivity.this, getString(R.string.please_check_your_email_or_password_login_activity), Toast.LENGTH_SHORT).show();
                                 }
-                                loadingBar.dismiss();
+                                progressDialog.dismiss();
                             }
                         });
             }

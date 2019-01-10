@@ -1,8 +1,6 @@
 <resources>
     <string name="app_name">Chat App</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="welcome_text">Welcome to Chat App</string>
     <string name="already_have_account_button">already have an account?</string>
@@ -16,13 +14,14 @@
 
     <string name="name_activity_register">Sign up</string>
     <string name="register_text">Register in your account</string>
-    <string name="edt_name_register">Name...</string>
-    <string name="edt_email_register">Email...</string>
-    <string name="edt_password_register">Password...</string>
+    <string name="edt_name_register">Your Name</string>
+    <string name="edt_email_register">Your Email</string>
+    <string name="edt_password_register">Your Password</string>
     <string name="create_account_button">create account</string>
 
     <string name="main_requests">Requests</string>
     <string name="main_chats">Chats</string>
+    <string name="main_groups">Groups</string>
     <string name="main_friends">Friends</string>
 
     <string name="main_account_settings_button">Account settings</string>
@@ -90,6 +89,7 @@
     <string name="Cancel_Friend_Request">Cancel Friend Request</string>
     <string name="Friend_request_sent">Friend request sent</string>
 
+    <string name="locale">English</string>
     <string name="Online">Online</string>
     <string name="active_few_ago_seconds_ago">active few ago seconds ago</string>
     <string name="a_minute_ago">a minute ago</string>
@@ -109,11 +109,59 @@
     <string name="Send_Message">Send Message</string>
 
     <string name="Friend_since">Friend since: </string>
-    
+
     <string name="Please_enter_full_information">Please enter full information!</string>
 
     <string name="Invalid_Email">Invalid Email!</string>
     <string name="Weak_Password">Weak Password!</string>
     <string name="Existing_Account">Existing account!</string>
+
+    <string name="Seen">✅ Seen</string>
+    <string name="Delivered">🏍 Delivered</string>
+
+    <string name="No_image_selected">No image selected</string>
+
+    <string name="button_change_info_SettingsActivity">Change more information</string>
+
+    <string name="spinner_item_male">Male</string>
+    <string name="spinner_item_fermale">Fermale</string>
+
+    <string name="UpdateSuccessful_InfoActivity">Successfully updated!</string>
+
+    <string name="Title_InfoActivity">Updating Your Information</string>
+
+    <string name="please_write_your_phone_InfoActivity">Please update your phone!</string>
+    <string name="please_update_your_sex_InfoActivity">Please update your sex!</string>
+    <string name="please_update_your_birthday_InfoActivity">Please update your birthday!</string>
+
+    <string name="YouHaveNotSetAPhoneNumber_InfoActivity">You have not set a phone number</string>
+    <string name="YouHaveNotSetABirthDay_InfoActivity">You have not set a birthday</string>
+
+    <string name="edt_phone_InfoActivity">Your Phone</string>
+    <string name="edt_birthday_InfoActivity">Your Birthday</string>
+
+    <string name="button_MoreInfo_ProfileActivity">More information</string>
+
+    <string name="textView_Username_MoreInformationActivity">Username : </string>
+    <string name="textView_PhoneNumber_MoreInformationActivity">Phone Number : </string>
+    <string name="textView_Sex_MoreInformationActivity">Sex : </string>
+    <string name="textView_Birthday_MoreInformationActivity">Birthday : </string>
+    <string name="textView_Email_MoreInformationActivity">Email : </string>
+    <string name="textView_JoinDate_MoreInformationActivity">Join Date : </string>
+
+    <string name="not_set">Not set</string>
+
+    <string name="See_profile">See profile</string>
+
+    <string name="Forgot_Password_LoginActivity">Forgot Your Password?</string>
+    <string name="textView_InfoReset_ForgotPasswordActivity">By clicking RESET, you will receive an email to reset your password.</string>
+    <string name="Button_ResetPassword_ForgotPasswordActivity">Reset</string>
+    <string name="Toast_PleaseCheckYourEmail_ForgotPasswordActivity">Email reset password has been sent! Please check your email!</string>
+
+    <string name="updating_imageGroup_CreateGroupsActivity">Updating group image</string>
+    <string name="please_wait_imageGroup_CreateGroupsActivity">Please wait....</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

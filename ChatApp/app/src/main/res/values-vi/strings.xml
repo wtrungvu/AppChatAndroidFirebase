@@ -13,12 +13,13 @@
 <string name="name_activity_register">Đăng ký tài khoản</string>
 <string name="register_text">Đăng ký vào tài khoản của bạn</string>
 <string name="edt_name_register">Tên hiển thị</string>
-<string name="edt_email_register">Email</string>
+<string name="edt_email_register">Email của bạn</string>
 <string name="edt_password_register">Mật khẩu</string>
 <string name="create_account_button">Đăng ký</string>
 
-<string name="main_requests">Lời mời kết bạn</string>
+<string name="main_requests">Lời mời</string>
 <string name="main_chats">Tin nhắn</string>
+    <string name="main_groups">Nhóm</string>
 <string name="main_friends">Bạn bè</string>
 
 <string name="main_account_settings_button">Thiết lập tài khoản</string>
@@ -85,6 +86,7 @@
 <string name="Cancel_Friend_Request">Hủy yêu cầu kết bạn</string>
 <string name="Friend_request_sent">Yêu cầu kết bạn đã gửi</string>
 
+    <string name="locale">Vietnamese</string>
 <string name="Online">Đang hoạt động</string>
 <string name="active_few_ago_seconds_ago">hoạt động vài giây trước</string>
 <string name="a_minute_ago">một phút trước</string>
@@ -110,5 +112,48 @@
 <string name="Invalid_Email">Email không đúng định dạng! Bạn vui lòng nhập đúng định dạng email</string>
     <string name="Weak_Password">Mật khẩu Yếu! Vui lòng đặt mật khẩu lớn hơn 6 kí tự!</string>
     <string name="Existing_Account">Email có người đăng ký! Vui lòng chọn email khác để đăng ký</string>
+
+    <string name="Seen">✅ Đã xem</string>
+    <string name="Delivered">🏍 Đã gửi</string>
+
+    <string name="No_image_selected">Bạn chưa chọn hình ảnh!</string>
+
+    <string name="button_change_info_SettingsActivity">Cập nhật thêm thông tin</string>
+
+    <string name="spinner_item_male">Nam</string>
+    <string name="spinner_item_fermale">Nữ</string>
+
+    <string name="UpdateSuccessful_InfoActivity">Cập nhật thông tin thành công!</string>
+
+    <string name="please_write_your_phone_InfoActivity">Vui lòng cập nhật số điện thoại của bạn!</string>
+    <string name="please_update_your_sex_InfoActivity">Vui lòng cập nhật giới tính của bạn!</string>
+    <string name="please_update_your_birthday_InfoActivity">Please update your birthday!</string>
+
+    <string name="YouHaveNotSetAPhoneNumber_InfoActivity">Bạn chưa cài số điện thoại</string>
+    <string name="YouHaveNotSetABirthDay_InfoActivity">Bạn chưa cài ngày sinh nhật</string>
+
+    <string name="edt_phone_InfoActivity">Số điện thoại của bạn</string>
+    <string name="edt_birthday_InfoActivity">Ngày sinh nhật của bạn</string>
+
+    <string name="button_MoreInfo_ProfileActivity">Xem thêm thông tin</string>
+
+    <string name="textView_Username_MoreInformationActivity">Tên hiển thị : </string>
+    <string name="textView_PhoneNumber_MoreInformationActivity">Số điện thoại : </string>
+    <string name="textView_Sex_MoreInformationActivity">Giới tính : </string>
+    <string name="textView_Birthday_MoreInformationActivity">Ngày sinh : </string>
+    <string name="textView_Email_MoreInformationActivity">Email : </string>
+    <string name="textView_JoinDate_MoreInformationActivity">Ngày tham gia : </string>
+
+    <string name="not_set">Chưa cài</string>
+    
+    <string name="See_profile">Xem trang cá nhân</string>
+
+    <string name="Forgot_Password_LoginActivity">Quên Mật Khẩu?</string>
+    <string name="textView_InfoReset_ForgotPasswordActivity">Khi ấn vào nút Đặt Lại Mật Khẩu, bạn sẽ nhận được một email để thiết lập lại mật khẩu của bạn.</string>
+    <string name="Button_ResetPassword_ForgotPasswordActivity">Đặt Lại Mật Khẩu</string>
+    <string name="Toast_PleaseCheckYourEmail_ForgotPasswordActivity">Email thiết lập lại mật khẩu đã được gửi! Vui lòng kiểm tra email!</string>
+
+    <string name="updating_imageGroup_CreateGroupsActivity">Cập nhật ảnh nhóm</string>
+    <string name="please_wait_imageGroup_CreateGroupsActivity">Vui lòng chờ một chút....</string>
 
 </resources>

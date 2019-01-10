@@ -2,7 +2,9 @@ package com.trungvu.chatapp.Fragment;
 
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -14,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.trungvu.chatapp.Activity.ProfileActivity;
 import com.trungvu.chatapp.Model.Requests;
 import com.trungvu.chatapp.R;
 import com.trungvu.chatapp.ViewHolder.RequestViewHolder;
@@ -30,46 +33,50 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class RequestsFragment extends Fragment {
-    RecyclerView myRequestList;
-    View myMainView;
-    DatabaseReference FriendsRequestReference;
-    FirebaseAuth mAuth;
-    String online_user_id;
-    DatabaseReference UsersReference;
+    View view;
+    RecyclerView recyclerView;
 
-    DatabaseReference FriendsDatabaseRef;
-    DatabaseReference FriendReqDatabaseRef;
+    FirebaseAuth auth;
+    String online_user_id;
+
+    DatabaseReference reference_FriendsRequest_online_user_id;
+    DatabaseReference reference_Users;
+    DatabaseReference reference_Friends;
+    DatabaseReference reference_FriendsRequest;
+
+    CharSequence option[];
 
     public RequestsFragment() {
-        // Required empty public constructor
+
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        myMainView = inflater.inflate(R.layout.fragment_requests, container, false);
-        myRequestList = myMainView.findViewById(R.id.requests_list);
+        view = inflater.inflate(R.layout.fragment_requests, container, false);
+        recyclerView = view.findViewById(R.id.recyclerView_RequestsFragment);
 
-        mAuth = FirebaseAuth.getInstance();
-        online_user_id = mAuth.getCurrentUser().getUid();
-        FriendsRequestReference = FirebaseDatabase.getInstance().getReference().child("Friend_Requests").child(online_user_id);
-        UsersReference = FirebaseDatabase.getInstance().getReference().child("Users");
-
-        FriendsDatabaseRef = FirebaseDatabase.getInstance().getReference().child("Friends");
-        FriendReqDatabaseRef = FirebaseDatabase.getInstance().getReference().child("Friend_Requests");
-
-
-        myRequestList.setHasFixedSize(true);
+        recyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
-        myRequestList.setLayoutManager(linearLayoutManager);
+        recyclerView.setLayoutManager(linearLayoutManager);
 
-        return myMainView;
+        auth = FirebaseAuth.getInstance();
+        online_user_id = auth.getCurrentUser().getUid();
+
+        reference_FriendsRequest_online_user_id = FirebaseDatabase.getInstance().getReference().child("Friend_Requests").child(online_user_id);
+        reference_Users = FirebaseDatabase.getInstance().getReference().child("Users");
+        reference_Friends = FirebaseDatabase.getInstance().getReference().child("Friends");
+        reference_FriendsRequest = FirebaseDatabase.getInstance().getReference().child("Friend_Requests");
+
+        return view;
     }
 
     @Override
@@ -80,7 +87,7 @@ public class RequestsFragment extends Fragment {
                 Requests.class,
                 R.layout.friend_request_all_users_layout,
                 RequestViewHolder.class,
-                FriendsRequestReference
+                reference_FriendsRequest_online_user_id
         ) {
             @Override
             protected void populateViewHolder(final RequestViewHolder viewHolder, Requests model, int position) {
@@ -88,8 +95,8 @@ public class RequestsFragment extends Fragment {
 
                 DatabaseReference get_type_ref = getRef(position).child("request_type").getRef();
 
-                final Button req_sent_btn = viewHolder.mView.findViewById(R.id.request_accept_btn);
-                final Button req_decline_btn = viewHolder.mView.findViewById(R.id.request_decline_btn);
+                final Button btn_accept = viewHolder.view.findViewById(R.id.button_accept_status_friend_request_all_users);
+                final Button btn_decline = viewHolder.view.findViewById(R.id.button_deline_status_friend_request_all_users);
 
                 get_type_ref.addValueEventListener(new ValueEventListener() {
                     @Override
@@ -97,7 +104,7 @@ public class RequestsFragment extends Fragment {
                         if (dataSnapshot.exists()) {
                             String request_type = dataSnapshot.getValue().toString();
                             if (request_type.equals("received")) {
-                                UsersReference.child(list_user_id).addValueEventListener(new ValueEventListener() {
+                                reference_Users.child(list_user_id).addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
                                         final String userName = dataSnapshot.child("user_name").getValue().toString();
@@ -108,28 +115,38 @@ public class RequestsFragment extends Fragment {
                                         viewHolder.setThumbImage(thumbImage, getContext());
                                         viewHolder.setUserStatus(userStatus);
 
-                                        final CharSequence option[] = new CharSequence[]{
-                                                getString(R.string.Accept_Friend_Request),
-                                                getString(R.string.Cancel_Friend_Request)
-                                        };
+                                        //  Check if the fragment is attached to the activity or not
+                                        if (isAdded()){
+                                            option = new CharSequence[]{
+                                                    getString(R.string.See_profile),
+                                                    getString(R.string.Accept_Friend_Request),
+                                                    getString(R.string.Cancel_Friend_Request)
+                                            };
+                                        }
 
-                                        viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                                        viewHolder.view.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
                                                 dialogAcceptAndCancel(option, list_user_id);
                                             }
                                         });
 
-                                        req_sent_btn.setText(getString(R.string.Accept));
-                                        req_sent_btn.setOnClickListener(new View.OnClickListener() {
+                                        if (isAdded()){
+                                            btn_accept.setText(getString(R.string.Accept));
+                                        }
+
+                                        btn_accept.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View view) {
                                                 dialogAcceptAndCancel(option, list_user_id);
                                             }
                                         });
 
-                                        req_decline_btn.setText(getString(R.string.Cancel));
-                                        req_decline_btn.setOnClickListener(new View.OnClickListener() {
+                                        if (isAdded()){
+                                            btn_decline.setText(getString(R.string.Cancel));
+                                        }
+
+                                        btn_decline.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View view) {
                                                 dialogAcceptAndCancel(option, list_user_id);
@@ -143,38 +160,44 @@ public class RequestsFragment extends Fragment {
 
                                     }
                                 });
-                            }
-                            else if (request_type.equals("sent")) {
-                                UsersReference.child(list_user_id).addValueEventListener(new ValueEventListener() {
+                            } else if (request_type.equals("sent")) {
+                                reference_Users.child(list_user_id).addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
                                         final String userName = dataSnapshot.child("user_name").getValue().toString();
                                         String thumbImage = dataSnapshot.child("user_thumb_image").getValue().toString();
                                         String userStatus = dataSnapshot.child("user_status").getValue().toString();
+
                                         viewHolder.setUserName(userName);
                                         viewHolder.setThumbImage(thumbImage, getContext());
                                         viewHolder.setUserStatus(userStatus);
-                                        final CharSequence option[] = new CharSequence[]{
-                                                getString(R.string.Cancel_Friend_Request)
-                                        };
-                                        viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+
+                                        if (isAdded()){
+                                            option = new CharSequence[]{
+                                                    getString(R.string.See_profile),
+                                                    getString(R.string.Cancel_Friend_Request)
+                                            };
+                                        }
+
+                                        viewHolder.view.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
                                                 dialogCancelFriendRequest(option, list_user_id);
                                             }
                                         });
 
-                                        // Request Friend
-                                        req_sent_btn.setText(getString(R.string.Request_sent)); // Request Sent Button Show
+                                        if (isAdded()){
+                                            btn_accept.setText(getString(R.string.Request_sent));
+                                        }
 
-                                        req_sent_btn.setOnClickListener(new View.OnClickListener() {
+                                        btn_accept.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View view) {
                                                 dialogCancelFriendRequest(option, list_user_id);
                                             }
                                         });
 
-                                        req_decline_btn.setVisibility(View.GONE); // Hide
+                                        btn_decline.setVisibility(View.GONE); // Hide
                                     }
 
                                     @Override
@@ -192,13 +215,13 @@ public class RequestsFragment extends Fragment {
                     }
                 });
 
-                UsersReference.child(list_user_id).addValueEventListener(new ValueEventListener() {
+                reference_Users.child(list_user_id).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         final String userName = dataSnapshot.child("user_name").getValue().toString();
                         String thumbImage = dataSnapshot.child("user_thumb_image").getValue().toString();
-
                         String userStatus = dataSnapshot.child("user_status").getValue().toString();
+
                         viewHolder.setUserName(userName);
                         viewHolder.setThumbImage(thumbImage, getContext());
                         viewHolder.setUserStatus(userStatus);
@@ -212,7 +235,7 @@ public class RequestsFragment extends Fragment {
                 });
             }
         };
-        myRequestList.setAdapter(adapter);
+        recyclerView.setAdapter(adapter);
     }
 
     private void dialogAcceptAndCancel(CharSequence option[], final String list_user_id) {
@@ -222,24 +245,39 @@ public class RequestsFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int position) {
                 if (position == 0) {
-                    Calendar calForDate = Calendar.getInstance();
-                    SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy");
-                    final String saveCurrentDate = currentDate.format(calForDate.getTime());
+                    Intent intent_profile = new Intent(getContext(), ProfileActivity.class);
+                    intent_profile.putExtra("visit_user_id", list_user_id);
+                    startActivity(intent_profile);
+                }
 
-                    FriendsDatabaseRef.child(online_user_id).child(list_user_id).child("date").setValue(saveCurrentDate)
+                if (position == 1) {
+                    Date d = new Date();
+                    SimpleDateFormat sdf_currentHour = new SimpleDateFormat("HH:mm:ss");
+                    String time = sdf_currentHour.format(d);
+
+                    Calendar calendar = Calendar.getInstance();
+                    SimpleDateFormat sdf_currentDate = new SimpleDateFormat("dd/MM/yyyy");
+                    String date = sdf_currentDate.format(calendar.getTime());
+
+                    final Map hashMap = new HashMap();
+                    hashMap.put("time", time);
+                    hashMap.put("date", date);
+
+                    reference_Friends.child(online_user_id).child(list_user_id).setValue(hashMap)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
-                                    FriendsDatabaseRef.child(list_user_id).child(online_user_id).child("date").setValue(saveCurrentDate)
+
+                                    reference_Friends.child(list_user_id).child(online_user_id).setValue(hashMap)
                                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
                                                 public void onSuccess(Void aVoid) {
-                                                    FriendReqDatabaseRef.child(online_user_id).child(list_user_id).removeValue()
+                                                    reference_FriendsRequest.child(online_user_id).child(list_user_id).removeValue()
                                                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                                 @Override
                                                                 public void onComplete(@NonNull Task<Void> task) {
                                                                     if (task.isSuccessful()) {
-                                                                        FriendReqDatabaseRef.child(list_user_id).child(online_user_id).removeValue()
+                                                                        reference_FriendsRequest.child(list_user_id).child(online_user_id).removeValue()
                                                                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                                                     @Override
                                                                                     public void onComplete(@NonNull Task<Void> task) {
@@ -258,13 +296,13 @@ public class RequestsFragment extends Fragment {
                             });
                 }
 
-                if (position == 1) {
-                    FriendReqDatabaseRef.child(online_user_id).child(list_user_id).removeValue()
+                if (position == 2) {
+                    reference_FriendsRequest.child(online_user_id).child(list_user_id).removeValue()
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
-                                        FriendReqDatabaseRef.child(list_user_id).child(online_user_id).removeValue()
+                                        reference_FriendsRequest.child(list_user_id).child(online_user_id).removeValue()
                                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> task) {
@@ -289,12 +327,18 @@ public class RequestsFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int position) {
                 if (position == 0) {
-                    FriendReqDatabaseRef.child(online_user_id).child(list_user_id).removeValue()
+                    Intent intent_profile = new Intent(getContext(), ProfileActivity.class);
+                    intent_profile.putExtra("visit_user_id", list_user_id);
+                    startActivity(intent_profile);
+                }
+
+                if (position == 1) {
+                    reference_FriendsRequest.child(online_user_id).child(list_user_id).removeValue()
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
-                                        FriendReqDatabaseRef.child(list_user_id).child(online_user_id).removeValue()
+                                        reference_FriendsRequest.child(list_user_id).child(online_user_id).removeValue()
                                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> task) {
@@ -312,4 +356,8 @@ public class RequestsFragment extends Fragment {
         builder.show();
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
 }

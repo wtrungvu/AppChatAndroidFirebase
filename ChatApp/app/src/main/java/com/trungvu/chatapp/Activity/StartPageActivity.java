@@ -10,7 +10,8 @@ import com.jaeger.library.StatusBarUtil;
 import com.trungvu.chatapp.R;
 
 public class StartPageActivity extends AppCompatActivity {
-    Button already_have_account_button,need_account_button;
+    Button btn_already_have_account;
+    Button btn_need_account;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,19 +24,20 @@ public class StartPageActivity extends AppCompatActivity {
     }
 
     private void addControls() {
-        already_have_account_button = findViewById(R.id.already_have_account_button);
-        need_account_button = findViewById(R.id.need_account_button);
+        btn_already_have_account = findViewById(R.id.button_already_have_account_StartPageActivity);
+        btn_need_account = findViewById(R.id.button_need_account_button_StartPageActivity);
     }
 
     private void addEvents() {
-        already_have_account_button.setOnClickListener(new View.OnClickListener() {
+        btn_already_have_account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent loginIntent = new Intent(StartPageActivity.this,LoginActivity.class);
                 startActivity(loginIntent);
             }
         });
-        need_account_button.setOnClickListener(new View.OnClickListener() {
+
+        btn_need_account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent registerIntent = new Intent(StartPageActivity.this,RegisterActivity.class);

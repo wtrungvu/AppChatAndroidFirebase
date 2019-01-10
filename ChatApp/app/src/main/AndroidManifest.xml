@@ -7,40 +7,39 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:name="com.trungvu.chatapp.Ultil.myChat_Offline"
+        android:name=".Ultil.myChat_Offline"
         android:allowBackup="true"
-        android:icon="@mipmap/icon"
+        android:icon="@drawable/icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/icon"
+        android:roundIcon="@drawable/icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name="com.trungvu.chatapp.Activity.WelcomeActivity">
+        <activity android:name=".Activity.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.trungvu.chatapp.Activity.MainActivity" />
-        <activity android:name="com.trungvu.chatapp.Activity.StartPageActivity" />
+        <activity android:name=".Activity.MainActivity" />
+        <activity android:name=".Activity.StartPageActivity" />
         <activity
-            android:name="com.trungvu.chatapp.Activity.LoginActivity"
-            android:parentActivityName="com.trungvu.chatapp.Activity.StartPageActivity" />
+            android:name=".Activity.LoginActivity"
+            android:parentActivityName=".Activity.StartPageActivity" />
         <activity
-            android:name="com.trungvu.chatapp.Activity.RegisterActivity"
-            android:parentActivityName="com.trungvu.chatapp.Activity.StartPageActivity" />
-        <activity android:name="com.trungvu.chatapp.Activity.SettingsActivity" />
+            android:name=".Activity.RegisterActivity"
+            android:parentActivityName=".Activity.StartPageActivity" />
+        <activity android:name=".Activity.SettingsActivity" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
         <activity
-            android:name="com.trungvu.chatapp.Activity.StatusActivity"
-            android:parentActivityName="com.trungvu.chatapp.Activity.SettingsActivity" />
+            android:name=".Activity.StatusActivity"
+            android:parentActivityName=".Activity.SettingsActivity" />
         <activity
-            android:name="com.trungvu.chatapp.Activity.AllUsersActivity"
-            android:parentActivityName="com.trungvu.chatapp.Activity.MainActivity" />
-        <activity android:name="com.trungvu.chatapp.Activity.ProfileActivity">
+            android:name=".Activity.AllUsersActivity"
+            android:parentActivityName=".Activity.MainActivity" />
+        <activity android:name=".Activity.ProfileActivity">
             <intent-filter>
                 <action android:name="com.trungvu.chatapp_TARGET_NOTIFICATION" />
 
@@ -48,15 +47,29 @@
             </intent-filter>
         </activity>
 
-        <service android:name="com.trungvu.chatapp.Service.FirebaseMessagingService">
+        <activity
+            android:name=".Activity.ChatActivity"
+            android:parentActivityName=".Activity.MainActivity" />
+        <activity android:name=".Activity.InfoActivity" />
+        <activity android:name=".Activity.MoreInformationActivity" />
+        <activity android:name=".Activity.ForgotPasswordActivity" />
+        <activity android:name=".Activity.CreateGroupsActivity"></activity>
+
+        <service android:name=".Notification.MyFirebaseIdService"
+            android:enabled="true"
+            android:exported="true">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>
         </service>
 
-        <activity
-            android:name="com.trungvu.chatapp.Activity.ChatActivity"
-            android:parentActivityName="com.trungvu.chatapp.Activity.MainActivity"></activity>
+        <service android:name=".Notification.MyFirebaseMessaging"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

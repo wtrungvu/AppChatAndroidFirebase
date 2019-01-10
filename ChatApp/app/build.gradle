@@ -47,5 +47,9 @@ dependencies {
     implementation 'id.zelory:compressor:2.1.0'
     implementation 'com.squareup.okhttp:okhttp:2.5.0'
     implementation 'com.jaeger.statusbarutil:library:1.4.0'
+    implementation 'com.github.hani-momanii:SuperNova-Emoji:1.1'
+    implementation 'com.getbase:floatingactionbutton:1.10.1'
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0' // A type-safe HTTP client for Android and Java
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
 }
 apply plugin: 'com.google.gms.google-services'

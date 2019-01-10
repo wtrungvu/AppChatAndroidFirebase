@@ -16,50 +16,56 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.jaeger.library.StatusBarUtil;
 import com.trungvu.chatapp.R;
 
 public class StatusActivity extends AppCompatActivity {
     Toolbar toolbar;
-    EditText StatusInput;
-    Button SaveChangesButton;
-    DatabaseReference changeStatusRef;
-    ProgressDialog loadingBar;
-    FirebaseAuth mAuth;
+    EditText edt_status;
+    Button btn_Save_Changes;
+
+    FirebaseAuth auth;
+    DatabaseReference reference;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_status);
+        StatusBarUtil.setTransparent(this); // Set StatusBar Color Transparent
 
-        mAuth = FirebaseAuth.getInstance();
-        String user_id = mAuth.getCurrentUser().getUid();
-        changeStatusRef = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id);
+        auth = FirebaseAuth.getInstance();
+        String user_id = auth.getCurrentUser().getUid();
+        reference = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id);
 
         addControls();
         addEvents();
     }
 
     private void addControls() {
-        toolbar = findViewById(R.id.status_app_bar);
-        setSupportActionBar(toolbar);
-        String change_status_activity = getString(R.string.change_status_activity);
-        getSupportActionBar().setTitle(change_status_activity);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        createToolBar();
 
-        loadingBar = new ProgressDialog(this);
-        StatusInput = findViewById(R.id.edt_status);
-        SaveChangesButton = findViewById(R.id.btn_save_changes);
+        progressDialog = new ProgressDialog(this);
+        edt_status = findViewById(R.id.editText_StatusActivity);
+        btn_Save_Changes = findViewById(R.id.button_save_changes_StatusActivity);
 
         String old_status = getIntent().getExtras().get("user_status").toString();
-        StatusInput.setText(old_status);
-        StatusInput.setSelection(StatusInput.getText().length()); // Place cursor at the end of text in EditText
+        edt_status.setText(old_status);
+        edt_status.setSelection(edt_status.getText().length()); // Place cursor at the end of text in EditText
+    }
+
+    private void createToolBar() {
+        toolbar = findViewById(R.id.app_bar_StatusActivity);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(getString(R.string.change_status_activity));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void addEvents() {
-        SaveChangesButton.setOnClickListener(new View.OnClickListener() {
+        btn_Save_Changes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String new_status = StatusInput.getText().toString();
+                String new_status = edt_status.getText().toString();
                 ChangeProfileStatus(new_status);
             }
         });
@@ -71,15 +77,16 @@ public class StatusActivity extends AppCompatActivity {
             Toast.makeText(this, please_write_status_activity , Toast.LENGTH_SHORT).show();
         }
         else {
-            loadingBar.setTitle(getString(R.string.loading_bar_changes_profile_status));
-            loadingBar.setMessage(getString(R.string.loading_bar_please_wait));
-            loadingBar.show();
-            changeStatusRef.child("user_status").setValue(new_status)
+            progressDialog.setTitle(getString(R.string.loading_bar_changes_profile_status));
+            progressDialog.setMessage(getString(R.string.loading_bar_please_wait));
+            progressDialog.show();
+
+            reference.child("user_status").setValue(new_status)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
-                                loadingBar.dismiss();
+                                progressDialog.dismiss();
                                 Toast.makeText(StatusActivity.this, getString(R.string.loading_bar_profile_status_updated_successfully), Toast.LENGTH_SHORT).show();
                                 finish();
                             }

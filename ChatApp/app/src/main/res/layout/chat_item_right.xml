@@ -25,7 +25,7 @@
                 android:id="@+id/message_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/message_text_background"
+                android:background="@drawable/message_text_background_two"
                 android:padding="15dp"
                 android:text="TextView"
                 android:textAlignment="textEnd"
@@ -37,13 +37,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
                 android:src="@drawable/profile" />
 
             <TextView
                 android:id="@+id/text_seen"
                 android:text="Seen"
-                android:textSize="15dp"
+                android:textSize="15sp"
                 android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/time_send"
+                android:text="time send"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -53,7 +60,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.85"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/messages_image"

@@ -13,7 +13,7 @@
         android:orientation="horizontal">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/all_users_profile_image"
+            android:id="@+id/profile_image_all_users_display"
             android:layout_width="85dp"
             android:layout_height="85dp"
             android:src="@drawable/profile" />
@@ -31,7 +31,7 @@
                 android:weightSum="4">
 
                 <TextView
-                    android:id="@+id/all_users_username"
+                    android:id="@+id/username_all_users_display"
                     android:layout_weight="3.75"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -41,16 +41,23 @@
                     android:textStyle="bold" />
 
                 <ImageView
-                    android:id="@+id/online_status_image"
-                    android:layout_weight="0.25"
+                    android:id="@+id/online_status_image_all_users_display"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:src="@mipmap/online"
-                    android:visibility="invisible" />
+                    android:layout_weight="0.25"
+                    android:src="@android:drawable/presence_online"
+                    android:visibility="gone"/>
+
+                <ImageView
+                    android:id="@+id/offline_status_image_all_users_display"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.25"
+                    android:src="@android:drawable/presence_invisible" />
             </LinearLayout>
 
             <TextView
-                android:id="@+id/all_users_userstatus"
+                android:id="@+id/user_status_all_users_display"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="user status"

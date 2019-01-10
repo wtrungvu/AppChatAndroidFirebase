@@ -7,18 +7,18 @@
     tools:context="com.trungvu.chatapp.Activity.MainActivity">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/appbar"
+        android:id="@+id/app_bar_MainActivity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <include
-            android:id="@+id/main_page_toolbar"
+            android:id="@+id/toolbar_MainActivity"
             layout="@layout/app_bar_layout">
 
         </include>
 
         <android.support.design.widget.TabLayout
-            android:id="@+id/main_tabs"
+            android:id="@+id/tabLayout_MainActivity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/custom_background"
@@ -29,10 +29,25 @@
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.view.ViewPager
-        android:id="@+id/main_tabs_paper"
+        android:id="@+id/viewPager_MainActivity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/appbar">
+        android:layout_below="@+id/app_bar_MainActivity">
 
     </android.support.v4.view.ViewPager>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton_CreateNewGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="16sp"
+        android:backgroundTint="@color/startColor_custom_background"
+        android:src="@drawable/fab_add_groups"
+        android:visibility="gone"
+        app:borderWidth="0dp"
+        app:elevation="6dp"
+        app:fabSize="normal" />
+
 </RelativeLayout>

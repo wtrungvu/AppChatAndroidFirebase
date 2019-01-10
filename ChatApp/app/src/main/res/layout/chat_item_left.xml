@@ -28,7 +28,7 @@
                 android:id="@+id/message_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/message_text_background_two"
+                android:background="@drawable/message_text_background"
                 android:padding="15dp"
                 android:text="TextView"
                 android:textColor="@android:color/background_light"
@@ -39,13 +39,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
                 android:src="@drawable/profile" />
 
             <TextView
-                android:id="@+id/text_seen"
-                android:text="Seen"
-                android:textSize="15dp"
-                android:visibility="gone"
+                android:id="@+id/time_send"
+                android:text="time send"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 

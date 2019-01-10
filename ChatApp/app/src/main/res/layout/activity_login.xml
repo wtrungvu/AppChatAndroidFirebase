@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,65 +8,100 @@
     tools:context="com.trungvu.chatapp.Activity.LoginActivity">
 
     <include
-        android:id="@+id/login_toolbar"
+        android:id="@+id/toolbar_LoginActivity"
         layout="@layout/app_bar_layout"></include>
 
     <EditText
-        android:id="@+id/edt_login_email"
-        android:layout_width="match_parent"
+        android:id="@+id/edt_login_email_LoginActivity"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:layout_margin="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
         android:background="@drawable/custom_button_2"
         android:ems="10"
         android:hint="@string/edt_login_email"
-        android:inputType="textMultiLine|textEmailAddress"
+        android:inputType="textEmailAddress"
         android:padding="20dp"
         android:textColor="#ffffff"
-        android:textColorHint="#ffffff" />
+        android:textColorHint="#ffffff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_text_LoginActivity" />
 
     <EditText
-        android:id="@+id/edt_login_password"
+        android:id="@+id/edt_login_password_LoginActivity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/edt_login_email"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="86dp"
+        android:layout_alignTop="@+id/edt_login_email_LoginActivity"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
         android:background="@drawable/custom_button_2"
         android:ems="10"
         android:hint="@string/edt_login_password"
-        android:inputType="textMultiLine|textPassword"
+        android:inputType="textPassword"
         android:padding="20dp"
         android:textColor="#ffffff"
-        android:textColorHint="#ffffff" />
+        android:textColorHint="#ffffff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edt_login_email_LoginActivity" />
+
+    <TextView
+        android:id="@+id/textView_ForgotYourPassword_LoginActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        android:layout_alignEnd="@+id/edt_login_email_LoginActivity"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="32dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/Forgot_Password_LoginActivity"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edt_login_password_LoginActivity" />
 
     <Button
-        android:id="@+id/login_button"
-        android:layout_width="357dp"
+        android:id="@+id/login_button_LoginActivity"
+        android:layout_width="0dp"
         android:layout_height="67dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="40dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
         android:background="@drawable/custom_button"
         android:text="@string/login_button"
         android:textColor="@android:color/background_light"
         android:textSize="25sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_ForgotYourPassword_LoginActivity" />
 
     <TextView
-        android:id="@+id/login_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:id="@+id/login_text_LoginActivity"
+        android:layout_width="381dp"
+        android:layout_height="0dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="122dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
         android:gravity="center"
         android:text="@string/login_text"
         android:textColor="#ffffff"
         android:textSize="36sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.461"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_LoginActivity" />
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

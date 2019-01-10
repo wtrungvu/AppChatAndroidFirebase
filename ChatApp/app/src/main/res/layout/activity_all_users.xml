@@ -8,7 +8,7 @@
     tools:context="com.trungvu.chatapp.Activity.AllUsersActivity">
 
     <include
-        android:id="@+id/all_users_app_bar"
+        android:id="@+id/toolBar_AllUsersActivity"
         layout="@layout/app_bar_layout" />
 
     <LinearLayout
@@ -22,7 +22,7 @@
         android:weightSum="4">
 
         <EditText
-            android:id="@+id/search_input_text"
+            android:id="@+id/editText_Search_AllUsersActivity"
             android:layout_weight="3.5"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
             android:textSize="18sp" />
 
         <ImageButton
-            android:id="@+id/search_friend_button"
+            android:id="@+id/button_Search_Friend_AllUsersActivity"
             android:layout_weight="0.5"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/all_user_recyclerView"
+        android:id="@+id/recyclerView_AllUsersActivity"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="9dp"

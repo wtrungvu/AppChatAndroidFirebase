@@ -8,18 +8,16 @@
     tools:context="com.trungvu.chatapp.Activity.StatusActivity">
 
     <include
-        android:id="@+id/status_app_bar"
+        android:id="@+id/app_bar_StatusActivity"
         layout="@layout/app_bar_layout" />
 
     <EditText
-        android:id="@+id/edt_status"
-        android:layout_width="match_parent"
+        android:id="@+id/editText_StatusActivity"
+        android:layout_width="348dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/status_app_bar"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="81dp"
         android:background="@drawable/custom_button_2"
         android:ems="10"
         android:hint="@string/edt_status"
@@ -29,14 +27,14 @@
         android:textColorHint="#ffffff" />
 
     <Button
-        android:id="@+id/btn_save_changes"
+        android:id="@+id/button_save_changes_StatusActivity"
         android:textSize="20sp"
         android:textStyle="bold"
         android:textColor="#ffffff"
         android:background="@drawable/custom_button"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/edt_status"
+        android:layout_below="@+id/editText_StatusActivity"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="31dp"
         android:text="@string/btn_save_changes" />
