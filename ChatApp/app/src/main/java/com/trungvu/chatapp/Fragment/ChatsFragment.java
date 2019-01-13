@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.jaredrummler.android.device.DeviceName;
 import com.trungvu.chatapp.Activity.ChatActivity;
 import com.trungvu.chatapp.Model.Chats;
 import com.trungvu.chatapp.Notification.Token;
@@ -26,6 +27,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class ChatsFragment extends Fragment {
@@ -124,8 +127,14 @@ public class ChatsFragment extends Fragment {
 
     private void updateToken(String token){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Tokens");
-        Token token1 = new Token(token);
-        reference.child(online_user_id).setValue(token1);
+        String device_name = DeviceName.getDeviceName();
+        String device_token = FirebaseInstanceId.getInstance().getToken();
+
+        Map hashMap = new HashMap();
+        hashMap.put("device_name", device_name);
+        hashMap.put("device_token", device_token);
+
+        reference.child(online_user_id).setValue(hashMap);
     }
 
 }

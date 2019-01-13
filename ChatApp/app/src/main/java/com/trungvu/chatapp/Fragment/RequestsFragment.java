@@ -252,7 +252,7 @@ public class RequestsFragment extends Fragment {
 
                 if (position == 1) {
                     Date d = new Date();
-                    SimpleDateFormat sdf_currentHour = new SimpleDateFormat("HH:mm:ss");
+                    SimpleDateFormat sdf_currentHour = new SimpleDateFormat("HH:mm");
                     String time = sdf_currentHour.format(d);
 
                     Calendar calendar = Calendar.getInstance();

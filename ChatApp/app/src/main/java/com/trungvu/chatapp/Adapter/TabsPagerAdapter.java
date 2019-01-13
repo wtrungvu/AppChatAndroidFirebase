@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.trungvu.chatapp.Fragment.ChatsFragment;
 import com.trungvu.chatapp.Fragment.FriendsFragment;
-import com.trungvu.chatapp.Fragment.GroupChatsFragment;
 import com.trungvu.chatapp.Fragment.RequestsFragment;
 import com.trungvu.chatapp.R;
 

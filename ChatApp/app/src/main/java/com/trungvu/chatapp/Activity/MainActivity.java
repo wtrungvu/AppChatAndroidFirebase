@@ -30,15 +30,19 @@ public class MainActivity extends AppCompatActivity {
     TabLayout tabLayout;
     TabsPagerAdapter tabsPagerAdapter;
     ViewPager viewPager;
-//    FloatingActionButton fab_CreateNewGroup;
+    FloatingActionButton fab_CreateNewGroup;
 
     FirebaseAuth auth;
 
     FirebaseUser firebaseUser;
     DatabaseReference reference;
 
-    int POSITION_TAB_ICON_CHATS = 0;
+//    int POSITION_TAB_ICON_CHATS = 0;
 //    int POSITION_TAB_ICON_GROUPS = 1;
+//    int POSITION_TAB_ICON_REQUEST = 2;
+//    int POSITION_TAB_ICON_FRIENDS = 3;
+
+    int POSITION_TAB_ICON_CHATS = 0;
     int POSITION_TAB_ICON_REQUEST = 1;
     int POSITION_TAB_ICON_FRIENDS = 2;
 
@@ -78,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setSelectedTabIndicatorHeight((int) (tabsPagerAdapter.getCount() * getResources().getDisplayMetrics().density));
         tabLayout.setTabTextColors(Color.parseColor("#000000"), Color.parseColor("#ffffff"));
 
-//        fab_CreateNewGroup = findViewById(R.id.floatingActionButton_CreateNewGroup);
+        fab_CreateNewGroup = findViewById(R.id.floatingActionButton_CreateNewGroup);
     }
 
     private void addEvents() {
@@ -86,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
 //            @Override
 //            public void onTabSelected(TabLayout.Tab tab) {
 //                int position = tab.getPosition();
-//                if (position == POSITION_TAB_ICON_GROUPS){
+//                if (position == POSITION_TAB_ICON_GROUPS) {
 //                    fab_CreateNewGroup.setVisibility(View.VISIBLE);
 //                }
 //            }
@@ -101,15 +105,15 @@ public class MainActivity extends AppCompatActivity {
 //
 //            }
 //        });
-        
-        
+//
+//
 //        fab_CreateNewGroup.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
 //                Intent intent_GroupChat = new Intent(MainActivity.this, CreateGroupsActivity.class);
 //                startActivity(intent_GroupChat);
-//    }
-//});
+//            }
+//        });
     }
 
     private void createToolBar() {
@@ -166,8 +170,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (firebaseUser == null) {
             LogOutUser();
-        } else
-        if (firebaseUser != null) {
+        } else if (firebaseUser != null) {
             reference_Users_online.child("online").setValue("true");
         }
     }

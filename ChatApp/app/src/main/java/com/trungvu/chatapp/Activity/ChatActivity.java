@@ -122,7 +122,7 @@ public class ChatActivity extends AppCompatActivity {
         MessageImageStorageRef = FirebaseStorage.getInstance().getReference().child("Messages_Pictures");
 
         // Notifications
-        apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
+        //apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
 
         addControls();
         addEvents();
@@ -315,75 +315,75 @@ public class ChatActivity extends AppCompatActivity {
             });
 
             // Notifications
-            final String msg = messageText;
-            reference = FirebaseDatabase.getInstance().getReference("Users").child(messageSenderId);
-
-            reference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    AllUsers users = dataSnapshot.getValue(AllUsers.class);
-
-                    if (notify) {
-                        sendNotification(messageReceiverId, users.getUser_name(), msg);
-                    }
-
-                    notify = false;
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
+//            final String msg = messageText;
+//            reference = FirebaseDatabase.getInstance().getReference("Users").child(messageSenderId);
+//
+//            reference.addValueEventListener(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                    AllUsers users = dataSnapshot.getValue(AllUsers.class);
+//
+//                    if (notify) {
+//                        sendNotification(messageReceiverId, users.getUser_name(), msg);
+//                    }
+//
+//                    notify = false;
+//                }
+//
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                }
+//            });
 
         }
     }
 
-    private void sendNotification(String receiver, final String user_name, final String message) {
-        DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("Tokens");
-        Query query = tokens.orderByKey().equalTo(receiver);
-
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Token token = snapshot.getValue(Token.class);
-
-                    Data data = new Data(messageSenderId
-                            , R.mipmap.ic_launcher
-                            , user_name + ": " + message
-                            , "New Message"
-                            , userid);
-
-                    Sender sender = new Sender(data, token.getToken());
-
-                    apiService.sendNotification(sender)
-                            .enqueue(new retrofit2.Callback<MyResponse>() {
-                                @Override
-                                public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
-                                    if (response.code() == 200) {
-                                        if (response.body().success != 1) {
-                                            Toast.makeText(ChatActivity.this, "Failed!", Toast.LENGTH_LONG).show();
-                                        }
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(Call<MyResponse> call, Throwable t) {
-
-                                }
-                            });
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-    }
+//    private void sendNotification(String receiver, final String user_name, final String message) {
+//        DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("Tokens");
+//        Query query = tokens.orderByKey().equalTo(receiver);
+//
+//        query.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                    Token token = snapshot.getValue(Token.class);
+//
+//                    Data data = new Data(messageSenderId
+//                            , R.mipmap.ic_launcher
+//                            , user_name + ": " + message
+//                            , "New Message"
+//                            , userid);
+//
+//                    Sender sender = new Sender(data, token.getToken());
+//
+//                    apiService.sendNotification(sender)
+//                            .enqueue(new retrofit2.Callback<MyResponse>() {
+//                                @Override
+//                                public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
+//                                    if (response.code() == 200) {
+//                                        if (response.body().success != 1) {
+//                                            Toast.makeText(ChatActivity.this, "Failed!", Toast.LENGTH_LONG).show();
+//                                        }
+//                                    }
+//                                }
+//
+//                                @Override
+//                                public void onFailure(Call<MyResponse> call, Throwable t) {
+//
+//                                }
+//                            });
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
+//
+//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

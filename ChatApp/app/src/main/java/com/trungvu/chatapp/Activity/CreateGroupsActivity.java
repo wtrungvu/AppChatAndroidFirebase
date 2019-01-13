@@ -50,13 +50,11 @@ public class CreateGroupsActivity extends AppCompatActivity {
     Button btn_Create_Group_Chat;
 
     FirebaseAuth auth;
-    FirebaseUser firebaseUser;
     DatabaseReference reference_Friends;
     DatabaseReference reference_User;
     String online_user_id;
-    String group_Chat_id;
 
-    List<String> list_add_user_id_Group = new ArrayList<>();
+    List<String> list_add_user_id_Group;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +70,9 @@ public class CreateGroupsActivity extends AppCompatActivity {
         reference_User = FirebaseDatabase.getInstance().getReference().child("Users");
         reference_User.keepSynced(true);
 
+        list_add_user_id_Group = new ArrayList<>();
+        list_add_user_id_Group.add(online_user_id); // 0
+
         addControls();
         addEvents();
     }
@@ -83,9 +84,9 @@ public class CreateGroupsActivity extends AppCompatActivity {
         btn_Create_Group_Chat = findViewById(R.id.button_Create_Group_Chat);
 
         recyclerView = findViewById(R.id.recyclerView_CreateGroupsActivity);
-        CreateAdapterRecyclerView();
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        CreateAdapterRecyclerView();
     }
 
     private void createToolBar() {
@@ -110,38 +111,76 @@ public class CreateGroupsActivity extends AppCompatActivity {
                 if (TextUtils.isEmpty(txt_GroupName)) {
                     Toast.makeText(CreateGroupsActivity.this, getString(R.string.Please_enter_full_information), Toast.LENGTH_SHORT).show();
                 } else {
-                    DatabaseReference reference_Groups_Info = FirebaseDatabase.getInstance().getReference().child("Groups").push();
-                    group_Chat_id = reference_Groups_Info.getKey();
 
-                    Date d = new Date();
-                    SimpleDateFormat sdf_currentHour = new SimpleDateFormat("HH:mm:ss");
-                    String time = sdf_currentHour.format(d);
+//                    Date d = new Date();
+//                    SimpleDateFormat sdf_currentHour = new SimpleDateFormat("HH:mm");
+//                    String time = sdf_currentHour.format(d);
+//
+//                    Calendar calendar = Calendar.getInstance();
+//                    SimpleDateFormat sdf_currentDate = new SimpleDateFormat("dd/MM/yyyy");
+//                    String date = sdf_currentDate.format(calendar.getTime());
+//
+//                    Map hashMap_Info = new HashMap();
+//                    hashMap_Info.put("group_name", txt_GroupName);
+//                    hashMap_Info.put("date_created", date);
+//                    hashMap_Info.put("time_created", time);
+//                    hashMap_Info.put("ount_Members", list_add_user_id_Group.size());
+//
+//                    reference_Groups_Info.child("Info").setValue(hashMap_Info).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                        @Override
+//                        public void onComplete(@NonNull Task<Void> task) {
+//                            if (task.isSuccessful()) {
+//                                finish();
+//                                Intent intent = new Intent(CreateGroupsActivity.this, MainActivity.class);
+//                                Bundle bundle = new Bundle();
+//                                bundle.putString("group_Chat_id", group_Chat_id);
+//                                startActivity(intent);
+//                                Toast.makeText(CreateGroupsActivity.this, "Create Group Successfull!", Toast.LENGTH_SHORT).show();
+//                            }
+//                        }
+//                    });
+                    for (int i = 0; i < list_add_user_id_Group.size(); i++) {
+                        DatabaseReference reference_Group_ListUsers = FirebaseDatabase.getInstance().getReference().child("Groups");
 
-                    Calendar calendar = Calendar.getInstance();
-                    SimpleDateFormat sdf_currentDate = new SimpleDateFormat("dd/MM/yyyy");
-                    String date = sdf_currentDate.format(calendar.getTime());
-
-                    Map hashMap_Info = new HashMap();
-                    hashMap_Info.put("group_name", txt_GroupName);
-                    hashMap_Info.put("date_created", date);
-                    hashMap_Info.put("time_created", time);
-                    hashMap_Info.put("ount_Members", list_add_user_id_Group.size());
-
-                    reference_Groups_Info.child("Info").setValue(hashMap_Info).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                finish();
-                                Intent intent = new Intent(CreateGroupsActivity.this, MainActivity.class);
-                                Bundle bundle = new Bundle();
-                                bundle.putString("group_Chat_id", group_Chat_id);
-                                startActivity(intent);
-                                Toast.makeText(CreateGroupsActivity.this, "Create Group Successfull!", Toast.LENGTH_SHORT).show();
-                            }
+                        if (i == 0){
+                            String message_sender_ref = "Groups/"
+                                    + list_add_user_id_Group.get(i) + "/"
+                                    + list_add_user_id_Group.get(i + 1)
+                                    + list_add_user_id_Group.get(i + 2);
                         }
-                    });
+                        if (i == 1){
+                            String message_sender_ref = "Groups/"
+                                    + list_add_user_id_Group.get(i) + "/"
+                                    + list_add_user_id_Group.get(i - 1)
+                                    + list_add_user_id_Group.get(i + 1);
+                        }
+                        if (i == 2) {
+                            String message_sender_ref = "Groups/"
+                                    + list_add_user_id_Group.get(i) + "/"
+                                    + list_add_user_id_Group.get(i - 2)
+                                    + list_add_user_id_Group.get(i - 1);
+                        }
+                    }
 
-                    DatabaseReference reference_Group_ListUsers = FirebaseDatabase.getInstance().getReference().child("Groups").child(group_Chat_id);
+                    // Viết vòng for in với size > 2 trở lên, in ra các mảng như sau:
+
+                    // vd: size = 3
+                    // 0, 1, 2
+                    // 1, 0 , 2
+                    // 2, 0 , 1
+
+                    // vd: size = 4
+                    // 0, 1, 2, 3
+                    // 1, 0, 2, 3
+                    // 2, 0, 1, 3
+                    // 3, 0, 1, 2
+
+                    // vd: size = 5
+                    // 0, 1, 2, 3, 4
+                    // 1, 0, 2, 3, 4
+                    // 2, 0, 1, 3, 4
+                    // 3, 0, 1, 2, 4
+                    // 4, 0, 1, 2, 3
 
                     Map hashMap_ListUsers = new HashMap();
                     hashMap_ListUsers.put("host_user_id", online_user_id);
@@ -150,7 +189,7 @@ public class CreateGroupsActivity extends AppCompatActivity {
                         hashMap_ListUsers.put("user_id_" + i, list_add_user_id_Group.get(i));
                     }
 
-                    reference_Group_ListUsers.child("List_Users").setValue(hashMap_ListUsers);
+//                    reference_Group_ListUsers.child().setValue(hashMap_ListUsers);
 
                 }
             }
@@ -184,7 +223,7 @@ public class CreateGroupsActivity extends AppCompatActivity {
                                 if (viewHolder.getCheckBoxSelectedItem() == false) {
                                     viewHolder.setCheckBoxSelectedItem(true);
                                     list_add_user_id_Group.add(user_id_position);
-                                    Log.d("AAA", String.valueOf(list_add_user_id_Group.size()));
+                                    //.d("AAA", String.valueOf(list_add_user_id_Group.size()));
                                 } else {
                                     viewHolder.setCheckBoxSelectedItem(false);
                                     for (int i = 0; i < list_add_user_id_Group.size(); i++) {
@@ -192,7 +231,7 @@ public class CreateGroupsActivity extends AppCompatActivity {
                                             list_add_user_id_Group.remove(i);
                                         }
                                     }
-                                    Log.d("AAA-2", String.valueOf(list_add_user_id_Group.size()));
+                                    //Log.d("AAA-2", String.valueOf(list_add_user_id_Group.size()));
                                 }
                             }
                         });
